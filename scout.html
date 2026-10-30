@@ -81,6 +81,12 @@ textarea{resize:vertical;}
   #summaryPane{display:block !important;}
   body{background:#fff;}
 }
+
+.note{font-size:12.5px;color:var(--muted);background:var(--light);border-left:3px solid var(--teal);border-radius:6px;padding:8px 10px;margin:0 0 12px;}
+.minor-hide{display:none !important;}
+.age-badge{display:none;font-size:12.5px;font-weight:700;color:var(--navy);margin:-4px 0 12px;}
+.age-badge.show{display:block;}
+.age-badge.minor{color:#92400E;background:#FEF3C7;border:1px solid var(--gold);border-radius:6px;padding:6px 10px;}
 </style>
 </head>
 <body>
@@ -91,7 +97,7 @@ textarea{resize:vertical;}
       <div class="brandtext">AFRITECH SPORTS TECHNOLOGY<br>AND INNOVATION GROUP LIMITED</div>
     </div>
     <h1>Player Recruitment &amp; Market Intelligence Form</h1>
-    <p class="sub">Scout / FIFA Football Agent Version — v4.0 (Mobile)</p>
+    <p class="sub">Scout / FIFA Football Agent Version — v5.0 (Mobile)</p>
     <p class="purpose">Evidence-led assessment for recruitment, representation, placement and investment decisions. Fill on your phone — tap a section to expand it.</p>
     <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
     <p class="progress-label" id="barlabel">0% complete</p>
@@ -191,7 +197,7 @@ textarea{resize:vertical;}
   <label for="scout_required_decision_date">Required decision date</label>
   <input type="date" id="scout_required_decision_date" name="scout_required_decision_date" data-label="Required decision date">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_budget_salary_parameters">Budget / salary parameters</label>
   <input type="text" id="scout_budget_salary_parameters" name="scout_budget_salary_parameters" data-label="Budget / salary parameters" placeholder="Currency and range">
 </div>
@@ -235,8 +241,9 @@ textarea{resize:vertical;}
 </div>
 <div class="field">
   <label for="scout_date_of_birth_age">Date of birth / age</label>
-  <input type="text" id="scout_date_of_birth_age" name="scout_date_of_birth_age" data-label="Date of birth / age">
+  <input type="text" id="scout_date_of_birth_age" name="scout_date_of_birth_age" data-label="Date of birth / age" placeholder="DD/MM/YYYY or age">
 </div>
+<div class="age-badge" id="ageBadge" aria-live="polite"></div>
 <div class="field">
   <span class="qlabel">Sex</span>
   
@@ -332,7 +339,7 @@ textarea{resize:vertical;}
   <label for="scout_transfermarkt_profile_url_if_yes">Transfermarkt profile URL (if yes)</label>
   <input type="text" id="scout_transfermarkt_profile_url_if_yes" name="scout_transfermarkt_profile_url_if_yes" data-label="Transfermarkt profile URL (if yes)">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_transfermarkt_valuation">Transfermarkt valuation</label>
   <input type="text" id="scout_transfermarkt_valuation" name="scout_transfermarkt_valuation" data-label="Transfermarkt valuation" placeholder="Currency, amount, date">
 </div>
@@ -1232,37 +1239,38 @@ textarea{resize:vertical;}
 <details class="section">
   <summary><span class="sec-num">13</span><span class="sec-title">Market, Valuation &amp; Financial Assessment</span><span class="chev">▾</span></summary>
   <div class="sec-body">
+    <p class="note">Monetary fields are hidden automatically when the date of birth shows the player is under 18.</p>
     
     
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_transfermarkt_public_value">Transfermarkt / public value</label>
   <input type="text" id="scout_transfermarkt_public_value" name="scout_transfermarkt_public_value" data-label="Transfermarkt / public value" placeholder="Currency and amount">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_estimated_contractual_cost">Estimated contractual cost</label>
   <input type="text" id="scout_estimated_contractual_cost" name="scout_estimated_contractual_cost" data-label="Estimated contractual cost">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_salary_allowance_expectation">Salary / allowance expectation</label>
   <input type="text" id="scout_salary_allowance_expectation" name="scout_salary_allowance_expectation" data-label="Salary / allowance expectation">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_agent_intermediary_fees_where_lawful_and_applicable">Agent / intermediary fees (where lawful and applicable)</label>
   <input type="text" id="scout_agent_intermediary_fees_where_lawful_and_applicable" name="scout_agent_intermediary_fees_where_lawful_and_applicable" data-label="Agent / intermediary fees (where lawful and applicable)">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_training_compensation_solidarity_exposure">Training compensation / solidarity exposure</label>
   <input type="text" id="scout_training_compensation_solidarity_exposure" name="scout_training_compensation_solidarity_exposure" data-label="Training compensation / solidarity exposure">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_visa_relocation_and_registration_costs">Visa, relocation and registration costs</label>
   <input type="text" id="scout_visa_relocation_and_registration_costs" name="scout_visa_relocation_and_registration_costs" data-label="Visa, relocation and registration costs">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_estimated_total_acquisition_placement_cost">Estimated total acquisition / placement cost</label>
   <input type="text" id="scout_estimated_total_acquisition_placement_cost" name="scout_estimated_total_acquisition_placement_cost" data-label="Estimated total acquisition / placement cost">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scout_estimated_future_resale_pathway_value">Estimated future resale / pathway value</label>
   <input type="text" id="scout_estimated_future_resale_pathway_value" name="scout_estimated_future_resale_pathway_value" data-label="Estimated future resale / pathway value">
 </div>
@@ -1292,6 +1300,38 @@ textarea{resize:vertical;}
 <div class="field">
   <label for="scout_positive_financial_asymmetry_what_upside_exists_what_must_happen_to_realise_it_and_what_can_destroy_it">Positive financial asymmetry: what upside exists, what must happen to realise it, and what can destroy it</label>
   <textarea id="scout_positive_financial_asymmetry_what_upside_exists_what_must_happen_to_realise_it_and_what_can_destroy_it" name="scout_positive_financial_asymmetry_what_upside_exists_what_must_happen_to_realise_it_and_what_can_destroy_it" rows="2" data-label="Positive financial asymmetry: what upside exists, what must happen to realise it, and what can destroy it"></textarea>
+</div>
+  </div>
+</details>
+<details class="section">
+  <summary><span class="sec-num">13A</span><span class="sec-title" id="scout_dc_sec_title">Deal conditions</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+    <p class="note">For players under 18 this box becomes “Engage only if”: record development and safeguarding conditions only, never fees or wages.</p>
+<div class="field" data-money="1">
+  <label for="scout_dc_fee">Fee ceiling</label>
+  <input type="text" id="scout_dc_fee" name="scout_dc_fee" data-label="Fee ceiling">
+</div>
+<div class="field" data-money="1">
+  <label for="scout_dc_wage">Wage ceiling</label>
+  <input type="text" id="scout_dc_wage" name="scout_dc_wage" data-label="Wage ceiling">
+</div>
+<div class="field">
+  <span class="qlabel">Registration-slot decision</span>
+  
+  <div class="opts">
+    <label class="opt" for="scout_dc_slot_0"><input type="radio" id="scout_dc_slot_0" name="scout_dc_slot" value="Use a slot now" data-label="Registration-slot decision"><span>Use a slot now</span></label>
+    <label class="opt" for="scout_dc_slot_1"><input type="radio" id="scout_dc_slot_1" name="scout_dc_slot" value="Hold until the next window" data-label="Registration-slot decision"><span>Hold until the next window</span></label>
+    <label class="opt" for="scout_dc_slot_2"><input type="radio" id="scout_dc_slot_2" name="scout_dc_slot" value="No slot required" data-label="Registration-slot decision"><span>No slot required</span></label>
+    <label class="opt" for="scout_dc_slot_3"><input type="radio" id="scout_dc_slot_3" name="scout_dc_slot" value="Not yet decided" data-label="Registration-slot decision"><span>Not yet decided</span></label>
+  </div>
+</div>
+<div class="field">
+  <label for="scout_dc_verify" id="scout_dc_verify_lab">Proceed only if — verification condition(s)</label>
+  <textarea id="scout_dc_verify" name="scout_dc_verify" rows="2" data-label="Proceed only if — verification condition(s)"></textarea>
+</div>
+<div class="field">
+  <label for="scout_dc_walk" id="scout_dc_walk_lab">Walk-away line</label>
+  <textarea id="scout_dc_walk" name="scout_dc_walk" rows="2" data-label="Walk-away line"></textarea>
 </div>
   </div>
 </details>
@@ -1444,6 +1484,23 @@ textarea{resize:vertical;}
   </div>
 </details>
 <details class="section">
+  <summary><span class="sec-num">16A</span><span class="sec-title">Reassessment cue</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+<div class="field">
+  <label for="scout_ra_verify" id="scout_ra_verify_lab">What to verify next</label>
+  <textarea id="scout_ra_verify" name="scout_ra_verify" rows="2" data-label="What to verify next"></textarea>
+</div>
+<div class="field">
+  <label for="scout_ra_ctx" id="scout_ra_ctx_lab">Match contexts to observe next (opponent level, game state, role)</label>
+  <textarea id="scout_ra_ctx" name="scout_ra_ctx" rows="2" data-label="Match contexts to observe next (opponent level, game state, role)"></textarea>
+</div>
+<div class="field">
+  <label for="scout_ra_date">Target reassessment date</label>
+  <input type="date" id="scout_ra_date" name="scout_ra_date" data-label="Target reassessment date">
+</div>
+  </div>
+</details>
+<details class="section">
   <summary><span class="sec-num">17</span><span class="sec-title">Sources, Disclosures &amp; Declaration</span><span class="chev">▾</span></summary>
   <div class="sec-body">
     
@@ -1503,7 +1560,8 @@ function addCard(id){
   updateProgress();
 }
 function updateProgress(){
-  const all = document.querySelectorAll('main input, main textarea');
+  applyMinor();
+  const all = Array.from(document.querySelectorAll('main input, main textarea')).filter(el=>!el.closest('.minor-hide'));
   let filled = 0, total = 0;
   const seen = new Set();
   all.forEach(el=>{
@@ -1517,7 +1575,7 @@ function updateProgress(){
   });
   document.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked').forEach(el=>{});
   const radioNames = new Set();
-  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>radioNames.add(el.name));
+  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>{ if(!el.closest('.minor-hide')) radioNames.add(el.name); });
   let radioFilled = 0;
   radioNames.forEach(n=>{ if(document.querySelector(`input[name="${n}"]:checked`)) radioFilled++; });
   const pct = total+radioNames.size ? Math.round(100*(filled+radioFilled)/(total+radioNames.size)) : 0;
@@ -1527,7 +1585,48 @@ function updateProgress(){
 document.addEventListener('input', updateProgress);
 document.addEventListener('change', updateProgress);
 
+
+const AF = {"dob": "scout_date_of_birth_age", "secTitleId": "scout_dc_sec_title", "secTitle": "Deal conditions", "secTitleMinor": "Engage only if", "verifyId": "scout_dc_verify", "verifyNormal": "Proceed only if — verification condition(s)", "verifyMinor": "Engage only if — development and safeguarding conditions", "age": "Age", "years": "years", "minorMsg": "Under 18 — safeguarding rules apply", "na": "Not applicable (minor)"};
+function afAge(raw){
+  const s = (raw||'').trim(); if(!s) return null;
+  const now = new Date(), cy = now.getFullYear(), cm = now.getMonth()+1, cd = now.getDate();
+  let m, y, mo, d;
+  if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))){ y=+m[1]; mo=+m[2]; d=+m[3]; }
+  else if((m = s.match(/^(\d{1,2})[\/.\-\s](\d{1,2})[\/.\-\s](\d{4})$/))){ d=+m[1]; mo=+m[2]; y=+m[3]; if(mo>12 && d<=12){ const x=d; d=mo; mo=x; } }
+  if(y){
+    if(mo<1||mo>12||d<1||d>31||y>cy||y<cy-100) return null;
+    let a = cy - y; if(cm < mo || (cm === mo && cd < d)) a--;
+    return (a>=0 && a<80) ? {age:a, exact:true} : null;
+  }
+  if((m = s.match(/^(\d{1,2})\s*(years?|yrs?|ans?|anos?|años?)?$/i))){ const a=+m[1]; return (a>=1 && a<80) ? {age:a, exact:true} : null; }
+  if((m = s.match(/\b((?:19|20)\d{2})\b/))){ const diff = cy - (+m[1]); if(diff>=0 && diff<80) return {age:diff-1, exact:false, maxAge:diff}; }
+  return null;
+}
+function afIsMinor(){
+  const el = document.getElementById(AF.dob); if(!el) return false;
+  const r = afAge(el.value); if(!r) return false;
+  return r.exact ? r.age < 18 : (r.maxAge < 18);
+}
+function applyMinor(){
+  const minor = afIsMinor();
+  document.querySelectorAll('[data-money]').forEach(d=>d.classList.toggle('minor-hide', minor));
+  const t = document.getElementById(AF.secTitleId); if(t) t.textContent = minor ? AF.secTitleMinor : AF.secTitle;
+  const lab = document.getElementById(AF.verifyId+'_lab'); if(lab) lab.textContent = minor ? AF.verifyMinor : AF.verifyNormal;
+  const ta = document.getElementById(AF.verifyId); if(ta) ta.setAttribute('data-label', minor ? AF.verifyMinor : AF.verifyNormal);
+  const b = document.getElementById('ageBadge');
+  if(b){
+    const r = afAge((document.getElementById(AF.dob)||{}).value);
+    if(!r){ b.className='age-badge'; b.textContent=''; }
+    else {
+      b.className = 'age-badge show' + (minor ? ' minor' : '');
+      b.textContent = (r.exact ? AF.age+': '+r.age+' '+AF.years : '') + (minor ? (r.exact ? ' — ' : '') + AF.minorMsg : '');
+      if(!b.textContent) b.className='age-badge';
+    }
+  }
+}
+
 function buildSummary(){
+  applyMinor();
   const sections = document.querySelectorAll('details.section');
   let html = '<h2>'+document.title+'</h2>';
   const coverBox = document.querySelector('.cover-fields');
@@ -1553,6 +1652,7 @@ function buildSummary(){
     inputs.forEach(el=>{
       const label = el.getAttribute('data-label');
       if(!label) return;
+      if(el.closest('[data-money]') && afIsMinor()){ items += `<div class="sum-item"><b>${label}</b>${AF.na}</div>`; return; }
       if(el.type==='radio' || el.type==='checkbox'){
         if(el.checked){
           items += `<div class="sum-item"><b>${label}</b>${el.value}</div>`;

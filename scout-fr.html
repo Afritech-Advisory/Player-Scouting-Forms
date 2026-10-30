@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,6 +81,12 @@ textarea{resize:vertical;}
   #summaryPane{display:block !important;}
   body{background:#fff;}
 }
+
+.note{font-size:12.5px;color:var(--muted);background:var(--light);border-left:3px solid var(--teal);border-radius:6px;padding:8px 10px;margin:0 0 12px;}
+.minor-hide{display:none !important;}
+.age-badge{display:none;font-size:12.5px;font-weight:700;color:var(--navy);margin:-4px 0 12px;}
+.age-badge.show{display:block;}
+.age-badge.minor{color:#92400E;background:#FEF3C7;border:1px solid var(--gold);border-radius:6px;padding:6px 10px;}
 </style>
 </head>
 <body>
@@ -91,10 +97,10 @@ textarea{resize:vertical;}
       <div class="brandtext">AFRITECH SPORTS TECHNOLOGY<br>AND INNOVATION GROUP LIMITED</div>
     </div>
     <h1>Formulaire de recrutement et d'intelligence de marché</h1>
-    <p class="sub">Version recruteur / agent FIFA — v4.0 (Mobile, FR)</p>
+    <p class="sub">Version recruteur / agent FIFA — v5.0 (Mobile, FR)</p>
     <p class="purpose">Évaluation fondée sur des preuves pour les décisions de recrutement, de représentation, de placement et d'investissement. À remplir sur téléphone — touchez une section pour la déplier.</p>
     <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
-    <p class="progress-label" id="barlabel">0% complete</p>
+    <p class="progress-label" id="barlabel">0 % complété</p>
   </header>
   <main>
     <div id="formPane">
@@ -191,7 +197,7 @@ textarea{resize:vertical;}
   <label for="scoutfr_date_de_d_cision_requise">Date de décision requise</label>
   <input type="date" id="scoutfr_date_de_d_cision_requise" name="scoutfr_date_de_d_cision_requise" data-label="Date de décision requise">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_param_tres_budget_salaire">Paramètres budget / salaire</label>
   <input type="text" id="scoutfr_param_tres_budget_salaire" name="scoutfr_param_tres_budget_salaire" data-label="Paramètres budget / salaire" placeholder="Devise et fourchette">
 </div>
@@ -235,8 +241,9 @@ textarea{resize:vertical;}
 </div>
 <div class="field">
   <label for="scoutfr_date_de_naissance_ge">Date de naissance / âge</label>
-  <input type="text" id="scoutfr_date_de_naissance_ge" name="scoutfr_date_de_naissance_ge" data-label="Date de naissance / âge">
+  <input type="text" id="scoutfr_date_de_naissance_ge" name="scoutfr_date_de_naissance_ge" data-label="Date de naissance / âge" placeholder="JJ/MM/AAAA ou âge">
 </div>
+<div class="age-badge" id="ageBadge" aria-live="polite"></div>
 <div class="field">
   <span class="qlabel">Sexe</span>
   
@@ -332,7 +339,7 @@ textarea{resize:vertical;}
   <label for="scoutfr_url_du_profil_transfermarkt_si_oui">URL du profil Transfermarkt (si oui)</label>
   <input type="text" id="scoutfr_url_du_profil_transfermarkt_si_oui" name="scoutfr_url_du_profil_transfermarkt_si_oui" data-label="URL du profil Transfermarkt (si oui)">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_valorisation_transfermarkt">Valorisation Transfermarkt</label>
   <input type="text" id="scoutfr_valorisation_transfermarkt" name="scoutfr_valorisation_transfermarkt" data-label="Valorisation Transfermarkt" placeholder="Devise, montant, date">
 </div>
@@ -365,10 +372,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_historique_club_centre_de_formation">
   <span class="qlabel">Historique club / centre de formation</span>
   <div class="cards" id="scoutfr_historique_club_centre_de_formation_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_historique_club_centre_de_formation')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_historique_club_centre_de_formation')">+ Ajouter une entrée</button>
   <template id="scoutfr_historique_club_centre_de_formation_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>De</label><input type="text" name="scoutfr_historique_club_centre_de_formation_de[]" data-label="Historique club / centre de formation — De"></div>
     <div class="field"><label>À</label><input type="text" name="scoutfr_historique_club_centre_de_formation_[]" data-label="Historique club / centre de formation — À"></div>
     <div class="field"><label>Club / centre de formation</label><input type="text" name="scoutfr_historique_club_centre_de_formation_club_centre_de_formation[]" data-label="Historique club / centre de formation — Club / centre de formation"></div>
@@ -383,10 +390,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_historique_de_saison">
   <span class="qlabel">Historique de saison</span>
   <div class="cards" id="scoutfr_historique_de_saison_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_historique_de_saison')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_historique_de_saison')">+ Ajouter une entrée</button>
   <template id="scoutfr_historique_de_saison_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Saison</label><input type="text" name="scoutfr_historique_de_saison_saison[]" data-label="Historique de saison — Saison"></div>
     <div class="field"><label>Club</label><input type="text" name="scoutfr_historique_de_saison_club[]" data-label="Historique de saison — Club"></div>
     <div class="field"><label>Compétition</label><input type="text" name="scoutfr_historique_de_saison_comp_tition[]" data-label="Historique de saison — Compétition"></div>
@@ -448,10 +455,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_camps_essais_et_tournois">
   <span class="qlabel">Camps, essais et tournois</span>
   <div class="cards" id="scoutfr_camps_essais_et_tournois_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_camps_essais_et_tournois')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_camps_essais_et_tournois')">+ Ajouter une entrée</button>
   <template id="scoutfr_camps_essais_et_tournois_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Date</label><input type="text" name="scoutfr_camps_essais_et_tournois_date[]" data-label="Camps, essais et tournois — Date"></div>
     <div class="field"><label>Club / tournoi / camp</label><input type="text" name="scoutfr_camps_essais_et_tournois_club_tournoi_camp[]" data-label="Camps, essais et tournois — Club / tournoi / camp"></div>
     <div class="field"><label>Pays</label><input type="text" name="scoutfr_camps_essais_et_tournois_pays[]" data-label="Camps, essais et tournois — Pays"></div>
@@ -473,10 +480,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_observation">
   <span class="qlabel">Observation</span>
   <div class="cards" id="scoutfr_observation_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_observation')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_observation')">+ Ajouter une entrée</button>
   <template id="scoutfr_observation_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Date</label><input type="text" name="scoutfr_observation_date[]" data-label="Observation — Date"></div>
     <div class="field"><label>Direct / vidéo</label><input type="text" name="scoutfr_observation_direct_vid_o[]" data-label="Observation — Direct / vidéo"></div>
     <div class="field"><label>Match complet / extraits</label><input type="text" name="scoutfr_observation_match_complet_extraits[]" data-label="Observation — Match complet / extraits"></div>
@@ -708,79 +715,79 @@ textarea{resize:vertical;}
     
 <div class="rate-block">
   
-  <p class="hint">Rate 1–5 (1 = major development need, 3 = competitive, 5 = outstanding). Add an evidence note or development priority where it matters.</p>
+  <p class="hint">Notez de 1 à 5 (1 = besoin de développement majeur, 3 = compétitif, 5 = exceptionnel). Ajoutez une note de preuve ou une priorité de développement lorsque c’est pertinent.</p>
   
 <div class="rate-row">
   <div class="rate-attr">Première touche</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__0_1"><input type="radio" id="scoutfr_tech__0_1" name="scoutfr_tech__0_rating" value="1" data-label="Première touche — rating"><span>1</span></label><label class="star" for="scoutfr_tech__0_2"><input type="radio" id="scoutfr_tech__0_2" name="scoutfr_tech__0_rating" value="2" data-label="Première touche — rating"><span>2</span></label><label class="star" for="scoutfr_tech__0_3"><input type="radio" id="scoutfr_tech__0_3" name="scoutfr_tech__0_rating" value="3" data-label="Première touche — rating"><span>3</span></label><label class="star" for="scoutfr_tech__0_4"><input type="radio" id="scoutfr_tech__0_4" name="scoutfr_tech__0_rating" value="4" data-label="Première touche — rating"><span>4</span></label><label class="star" for="scoutfr_tech__0_5"><input type="radio" id="scoutfr_tech__0_5" name="scoutfr_tech__0_rating" value="5" data-label="Première touche — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__0_ev" name="scoutfr_tech__0_ev" placeholder="Evidence / observation" data-label="Première touche — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__0_dp" name="scoutfr_tech__0_dp" placeholder="Development priority" data-label="Première touche — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__0_1"><input type="radio" id="scoutfr_tech__0_1" name="scoutfr_tech__0_rating" value="1" data-label="Première touche — note"><span>1</span></label><label class="star" for="scoutfr_tech__0_2"><input type="radio" id="scoutfr_tech__0_2" name="scoutfr_tech__0_rating" value="2" data-label="Première touche — note"><span>2</span></label><label class="star" for="scoutfr_tech__0_3"><input type="radio" id="scoutfr_tech__0_3" name="scoutfr_tech__0_rating" value="3" data-label="Première touche — note"><span>3</span></label><label class="star" for="scoutfr_tech__0_4"><input type="radio" id="scoutfr_tech__0_4" name="scoutfr_tech__0_rating" value="4" data-label="Première touche — note"><span>4</span></label><label class="star" for="scoutfr_tech__0_5"><input type="radio" id="scoutfr_tech__0_5" name="scoutfr_tech__0_rating" value="5" data-label="Première touche — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__0_ev" name="scoutfr_tech__0_ev" placeholder="Preuve / observation" data-label="Première touche — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__0_dp" name="scoutfr_tech__0_dp" placeholder="Priorité de développement" data-label="Première touche — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Utilisation du pied faible</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__1_1"><input type="radio" id="scoutfr_tech__1_1" name="scoutfr_tech__1_rating" value="1" data-label="Utilisation du pied faible — rating"><span>1</span></label><label class="star" for="scoutfr_tech__1_2"><input type="radio" id="scoutfr_tech__1_2" name="scoutfr_tech__1_rating" value="2" data-label="Utilisation du pied faible — rating"><span>2</span></label><label class="star" for="scoutfr_tech__1_3"><input type="radio" id="scoutfr_tech__1_3" name="scoutfr_tech__1_rating" value="3" data-label="Utilisation du pied faible — rating"><span>3</span></label><label class="star" for="scoutfr_tech__1_4"><input type="radio" id="scoutfr_tech__1_4" name="scoutfr_tech__1_rating" value="4" data-label="Utilisation du pied faible — rating"><span>4</span></label><label class="star" for="scoutfr_tech__1_5"><input type="radio" id="scoutfr_tech__1_5" name="scoutfr_tech__1_rating" value="5" data-label="Utilisation du pied faible — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__1_ev" name="scoutfr_tech__1_ev" placeholder="Evidence / observation" data-label="Utilisation du pied faible — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__1_dp" name="scoutfr_tech__1_dp" placeholder="Development priority" data-label="Utilisation du pied faible — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__1_1"><input type="radio" id="scoutfr_tech__1_1" name="scoutfr_tech__1_rating" value="1" data-label="Utilisation du pied faible — note"><span>1</span></label><label class="star" for="scoutfr_tech__1_2"><input type="radio" id="scoutfr_tech__1_2" name="scoutfr_tech__1_rating" value="2" data-label="Utilisation du pied faible — note"><span>2</span></label><label class="star" for="scoutfr_tech__1_3"><input type="radio" id="scoutfr_tech__1_3" name="scoutfr_tech__1_rating" value="3" data-label="Utilisation du pied faible — note"><span>3</span></label><label class="star" for="scoutfr_tech__1_4"><input type="radio" id="scoutfr_tech__1_4" name="scoutfr_tech__1_rating" value="4" data-label="Utilisation du pied faible — note"><span>4</span></label><label class="star" for="scoutfr_tech__1_5"><input type="radio" id="scoutfr_tech__1_5" name="scoutfr_tech__1_rating" value="5" data-label="Utilisation du pied faible — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__1_ev" name="scoutfr_tech__1_ev" placeholder="Preuve / observation" data-label="Utilisation du pied faible — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__1_dp" name="scoutfr_tech__1_dp" placeholder="Priorité de développement" data-label="Utilisation du pied faible — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Passe courte</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__2_1"><input type="radio" id="scoutfr_tech__2_1" name="scoutfr_tech__2_rating" value="1" data-label="Passe courte — rating"><span>1</span></label><label class="star" for="scoutfr_tech__2_2"><input type="radio" id="scoutfr_tech__2_2" name="scoutfr_tech__2_rating" value="2" data-label="Passe courte — rating"><span>2</span></label><label class="star" for="scoutfr_tech__2_3"><input type="radio" id="scoutfr_tech__2_3" name="scoutfr_tech__2_rating" value="3" data-label="Passe courte — rating"><span>3</span></label><label class="star" for="scoutfr_tech__2_4"><input type="radio" id="scoutfr_tech__2_4" name="scoutfr_tech__2_rating" value="4" data-label="Passe courte — rating"><span>4</span></label><label class="star" for="scoutfr_tech__2_5"><input type="radio" id="scoutfr_tech__2_5" name="scoutfr_tech__2_rating" value="5" data-label="Passe courte — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__2_ev" name="scoutfr_tech__2_ev" placeholder="Evidence / observation" data-label="Passe courte — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__2_dp" name="scoutfr_tech__2_dp" placeholder="Development priority" data-label="Passe courte — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__2_1"><input type="radio" id="scoutfr_tech__2_1" name="scoutfr_tech__2_rating" value="1" data-label="Passe courte — note"><span>1</span></label><label class="star" for="scoutfr_tech__2_2"><input type="radio" id="scoutfr_tech__2_2" name="scoutfr_tech__2_rating" value="2" data-label="Passe courte — note"><span>2</span></label><label class="star" for="scoutfr_tech__2_3"><input type="radio" id="scoutfr_tech__2_3" name="scoutfr_tech__2_rating" value="3" data-label="Passe courte — note"><span>3</span></label><label class="star" for="scoutfr_tech__2_4"><input type="radio" id="scoutfr_tech__2_4" name="scoutfr_tech__2_rating" value="4" data-label="Passe courte — note"><span>4</span></label><label class="star" for="scoutfr_tech__2_5"><input type="radio" id="scoutfr_tech__2_5" name="scoutfr_tech__2_rating" value="5" data-label="Passe courte — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__2_ev" name="scoutfr_tech__2_ev" placeholder="Preuve / observation" data-label="Passe courte — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__2_dp" name="scoutfr_tech__2_dp" placeholder="Priorité de développement" data-label="Passe courte — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Passe progressive</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__3_1"><input type="radio" id="scoutfr_tech__3_1" name="scoutfr_tech__3_rating" value="1" data-label="Passe progressive — rating"><span>1</span></label><label class="star" for="scoutfr_tech__3_2"><input type="radio" id="scoutfr_tech__3_2" name="scoutfr_tech__3_rating" value="2" data-label="Passe progressive — rating"><span>2</span></label><label class="star" for="scoutfr_tech__3_3"><input type="radio" id="scoutfr_tech__3_3" name="scoutfr_tech__3_rating" value="3" data-label="Passe progressive — rating"><span>3</span></label><label class="star" for="scoutfr_tech__3_4"><input type="radio" id="scoutfr_tech__3_4" name="scoutfr_tech__3_rating" value="4" data-label="Passe progressive — rating"><span>4</span></label><label class="star" for="scoutfr_tech__3_5"><input type="radio" id="scoutfr_tech__3_5" name="scoutfr_tech__3_rating" value="5" data-label="Passe progressive — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__3_ev" name="scoutfr_tech__3_ev" placeholder="Evidence / observation" data-label="Passe progressive — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__3_dp" name="scoutfr_tech__3_dp" placeholder="Development priority" data-label="Passe progressive — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__3_1"><input type="radio" id="scoutfr_tech__3_1" name="scoutfr_tech__3_rating" value="1" data-label="Passe progressive — note"><span>1</span></label><label class="star" for="scoutfr_tech__3_2"><input type="radio" id="scoutfr_tech__3_2" name="scoutfr_tech__3_rating" value="2" data-label="Passe progressive — note"><span>2</span></label><label class="star" for="scoutfr_tech__3_3"><input type="radio" id="scoutfr_tech__3_3" name="scoutfr_tech__3_rating" value="3" data-label="Passe progressive — note"><span>3</span></label><label class="star" for="scoutfr_tech__3_4"><input type="radio" id="scoutfr_tech__3_4" name="scoutfr_tech__3_rating" value="4" data-label="Passe progressive — note"><span>4</span></label><label class="star" for="scoutfr_tech__3_5"><input type="radio" id="scoutfr_tech__3_5" name="scoutfr_tech__3_rating" value="5" data-label="Passe progressive — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__3_ev" name="scoutfr_tech__3_ev" placeholder="Preuve / observation" data-label="Passe progressive — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__3_dp" name="scoutfr_tech__3_dp" placeholder="Priorité de développement" data-label="Passe progressive — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Passe longue / changement de jeu</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__4_1"><input type="radio" id="scoutfr_tech__4_1" name="scoutfr_tech__4_rating" value="1" data-label="Passe longue / changement de jeu — rating"><span>1</span></label><label class="star" for="scoutfr_tech__4_2"><input type="radio" id="scoutfr_tech__4_2" name="scoutfr_tech__4_rating" value="2" data-label="Passe longue / changement de jeu — rating"><span>2</span></label><label class="star" for="scoutfr_tech__4_3"><input type="radio" id="scoutfr_tech__4_3" name="scoutfr_tech__4_rating" value="3" data-label="Passe longue / changement de jeu — rating"><span>3</span></label><label class="star" for="scoutfr_tech__4_4"><input type="radio" id="scoutfr_tech__4_4" name="scoutfr_tech__4_rating" value="4" data-label="Passe longue / changement de jeu — rating"><span>4</span></label><label class="star" for="scoutfr_tech__4_5"><input type="radio" id="scoutfr_tech__4_5" name="scoutfr_tech__4_rating" value="5" data-label="Passe longue / changement de jeu — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__4_ev" name="scoutfr_tech__4_ev" placeholder="Evidence / observation" data-label="Passe longue / changement de jeu — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__4_dp" name="scoutfr_tech__4_dp" placeholder="Development priority" data-label="Passe longue / changement de jeu — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__4_1"><input type="radio" id="scoutfr_tech__4_1" name="scoutfr_tech__4_rating" value="1" data-label="Passe longue / changement de jeu — note"><span>1</span></label><label class="star" for="scoutfr_tech__4_2"><input type="radio" id="scoutfr_tech__4_2" name="scoutfr_tech__4_rating" value="2" data-label="Passe longue / changement de jeu — note"><span>2</span></label><label class="star" for="scoutfr_tech__4_3"><input type="radio" id="scoutfr_tech__4_3" name="scoutfr_tech__4_rating" value="3" data-label="Passe longue / changement de jeu — note"><span>3</span></label><label class="star" for="scoutfr_tech__4_4"><input type="radio" id="scoutfr_tech__4_4" name="scoutfr_tech__4_rating" value="4" data-label="Passe longue / changement de jeu — note"><span>4</span></label><label class="star" for="scoutfr_tech__4_5"><input type="radio" id="scoutfr_tech__4_5" name="scoutfr_tech__4_rating" value="5" data-label="Passe longue / changement de jeu — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__4_ev" name="scoutfr_tech__4_ev" placeholder="Preuve / observation" data-label="Passe longue / changement de jeu — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__4_dp" name="scoutfr_tech__4_dp" placeholder="Priorité de développement" data-label="Passe longue / changement de jeu — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Conduite de balle</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__5_1"><input type="radio" id="scoutfr_tech__5_1" name="scoutfr_tech__5_rating" value="1" data-label="Conduite de balle — rating"><span>1</span></label><label class="star" for="scoutfr_tech__5_2"><input type="radio" id="scoutfr_tech__5_2" name="scoutfr_tech__5_rating" value="2" data-label="Conduite de balle — rating"><span>2</span></label><label class="star" for="scoutfr_tech__5_3"><input type="radio" id="scoutfr_tech__5_3" name="scoutfr_tech__5_rating" value="3" data-label="Conduite de balle — rating"><span>3</span></label><label class="star" for="scoutfr_tech__5_4"><input type="radio" id="scoutfr_tech__5_4" name="scoutfr_tech__5_rating" value="4" data-label="Conduite de balle — rating"><span>4</span></label><label class="star" for="scoutfr_tech__5_5"><input type="radio" id="scoutfr_tech__5_5" name="scoutfr_tech__5_rating" value="5" data-label="Conduite de balle — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__5_ev" name="scoutfr_tech__5_ev" placeholder="Evidence / observation" data-label="Conduite de balle — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__5_dp" name="scoutfr_tech__5_dp" placeholder="Development priority" data-label="Conduite de balle — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__5_1"><input type="radio" id="scoutfr_tech__5_1" name="scoutfr_tech__5_rating" value="1" data-label="Conduite de balle — note"><span>1</span></label><label class="star" for="scoutfr_tech__5_2"><input type="radio" id="scoutfr_tech__5_2" name="scoutfr_tech__5_rating" value="2" data-label="Conduite de balle — note"><span>2</span></label><label class="star" for="scoutfr_tech__5_3"><input type="radio" id="scoutfr_tech__5_3" name="scoutfr_tech__5_rating" value="3" data-label="Conduite de balle — note"><span>3</span></label><label class="star" for="scoutfr_tech__5_4"><input type="radio" id="scoutfr_tech__5_4" name="scoutfr_tech__5_rating" value="4" data-label="Conduite de balle — note"><span>4</span></label><label class="star" for="scoutfr_tech__5_5"><input type="radio" id="scoutfr_tech__5_5" name="scoutfr_tech__5_rating" value="5" data-label="Conduite de balle — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__5_ev" name="scoutfr_tech__5_ev" placeholder="Preuve / observation" data-label="Conduite de balle — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__5_dp" name="scoutfr_tech__5_dp" placeholder="Priorité de développement" data-label="Conduite de balle — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Duel offensif 1c1</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__6_1"><input type="radio" id="scoutfr_tech__6_1" name="scoutfr_tech__6_rating" value="1" data-label="Duel offensif 1c1 — rating"><span>1</span></label><label class="star" for="scoutfr_tech__6_2"><input type="radio" id="scoutfr_tech__6_2" name="scoutfr_tech__6_rating" value="2" data-label="Duel offensif 1c1 — rating"><span>2</span></label><label class="star" for="scoutfr_tech__6_3"><input type="radio" id="scoutfr_tech__6_3" name="scoutfr_tech__6_rating" value="3" data-label="Duel offensif 1c1 — rating"><span>3</span></label><label class="star" for="scoutfr_tech__6_4"><input type="radio" id="scoutfr_tech__6_4" name="scoutfr_tech__6_rating" value="4" data-label="Duel offensif 1c1 — rating"><span>4</span></label><label class="star" for="scoutfr_tech__6_5"><input type="radio" id="scoutfr_tech__6_5" name="scoutfr_tech__6_rating" value="5" data-label="Duel offensif 1c1 — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__6_ev" name="scoutfr_tech__6_ev" placeholder="Evidence / observation" data-label="Duel offensif 1c1 — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__6_dp" name="scoutfr_tech__6_dp" placeholder="Development priority" data-label="Duel offensif 1c1 — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__6_1"><input type="radio" id="scoutfr_tech__6_1" name="scoutfr_tech__6_rating" value="1" data-label="Duel offensif 1c1 — note"><span>1</span></label><label class="star" for="scoutfr_tech__6_2"><input type="radio" id="scoutfr_tech__6_2" name="scoutfr_tech__6_rating" value="2" data-label="Duel offensif 1c1 — note"><span>2</span></label><label class="star" for="scoutfr_tech__6_3"><input type="radio" id="scoutfr_tech__6_3" name="scoutfr_tech__6_rating" value="3" data-label="Duel offensif 1c1 — note"><span>3</span></label><label class="star" for="scoutfr_tech__6_4"><input type="radio" id="scoutfr_tech__6_4" name="scoutfr_tech__6_rating" value="4" data-label="Duel offensif 1c1 — note"><span>4</span></label><label class="star" for="scoutfr_tech__6_5"><input type="radio" id="scoutfr_tech__6_5" name="scoutfr_tech__6_rating" value="5" data-label="Duel offensif 1c1 — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__6_ev" name="scoutfr_tech__6_ev" placeholder="Preuve / observation" data-label="Duel offensif 1c1 — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__6_dp" name="scoutfr_tech__6_dp" placeholder="Priorité de développement" data-label="Duel offensif 1c1 — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Centre / dernière passe</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__7_1"><input type="radio" id="scoutfr_tech__7_1" name="scoutfr_tech__7_rating" value="1" data-label="Centre / dernière passe — rating"><span>1</span></label><label class="star" for="scoutfr_tech__7_2"><input type="radio" id="scoutfr_tech__7_2" name="scoutfr_tech__7_rating" value="2" data-label="Centre / dernière passe — rating"><span>2</span></label><label class="star" for="scoutfr_tech__7_3"><input type="radio" id="scoutfr_tech__7_3" name="scoutfr_tech__7_rating" value="3" data-label="Centre / dernière passe — rating"><span>3</span></label><label class="star" for="scoutfr_tech__7_4"><input type="radio" id="scoutfr_tech__7_4" name="scoutfr_tech__7_rating" value="4" data-label="Centre / dernière passe — rating"><span>4</span></label><label class="star" for="scoutfr_tech__7_5"><input type="radio" id="scoutfr_tech__7_5" name="scoutfr_tech__7_rating" value="5" data-label="Centre / dernière passe — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__7_ev" name="scoutfr_tech__7_ev" placeholder="Evidence / observation" data-label="Centre / dernière passe — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__7_dp" name="scoutfr_tech__7_dp" placeholder="Development priority" data-label="Centre / dernière passe — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__7_1"><input type="radio" id="scoutfr_tech__7_1" name="scoutfr_tech__7_rating" value="1" data-label="Centre / dernière passe — note"><span>1</span></label><label class="star" for="scoutfr_tech__7_2"><input type="radio" id="scoutfr_tech__7_2" name="scoutfr_tech__7_rating" value="2" data-label="Centre / dernière passe — note"><span>2</span></label><label class="star" for="scoutfr_tech__7_3"><input type="radio" id="scoutfr_tech__7_3" name="scoutfr_tech__7_rating" value="3" data-label="Centre / dernière passe — note"><span>3</span></label><label class="star" for="scoutfr_tech__7_4"><input type="radio" id="scoutfr_tech__7_4" name="scoutfr_tech__7_rating" value="4" data-label="Centre / dernière passe — note"><span>4</span></label><label class="star" for="scoutfr_tech__7_5"><input type="radio" id="scoutfr_tech__7_5" name="scoutfr_tech__7_rating" value="5" data-label="Centre / dernière passe — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__7_ev" name="scoutfr_tech__7_ev" placeholder="Preuve / observation" data-label="Centre / dernière passe — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__7_dp" name="scoutfr_tech__7_dp" placeholder="Priorité de développement" data-label="Centre / dernière passe — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Finition</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__8_1"><input type="radio" id="scoutfr_tech__8_1" name="scoutfr_tech__8_rating" value="1" data-label="Finition — rating"><span>1</span></label><label class="star" for="scoutfr_tech__8_2"><input type="radio" id="scoutfr_tech__8_2" name="scoutfr_tech__8_rating" value="2" data-label="Finition — rating"><span>2</span></label><label class="star" for="scoutfr_tech__8_3"><input type="radio" id="scoutfr_tech__8_3" name="scoutfr_tech__8_rating" value="3" data-label="Finition — rating"><span>3</span></label><label class="star" for="scoutfr_tech__8_4"><input type="radio" id="scoutfr_tech__8_4" name="scoutfr_tech__8_rating" value="4" data-label="Finition — rating"><span>4</span></label><label class="star" for="scoutfr_tech__8_5"><input type="radio" id="scoutfr_tech__8_5" name="scoutfr_tech__8_rating" value="5" data-label="Finition — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__8_ev" name="scoutfr_tech__8_ev" placeholder="Evidence / observation" data-label="Finition — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__8_dp" name="scoutfr_tech__8_dp" placeholder="Development priority" data-label="Finition — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__8_1"><input type="radio" id="scoutfr_tech__8_1" name="scoutfr_tech__8_rating" value="1" data-label="Finition — note"><span>1</span></label><label class="star" for="scoutfr_tech__8_2"><input type="radio" id="scoutfr_tech__8_2" name="scoutfr_tech__8_rating" value="2" data-label="Finition — note"><span>2</span></label><label class="star" for="scoutfr_tech__8_3"><input type="radio" id="scoutfr_tech__8_3" name="scoutfr_tech__8_rating" value="3" data-label="Finition — note"><span>3</span></label><label class="star" for="scoutfr_tech__8_4"><input type="radio" id="scoutfr_tech__8_4" name="scoutfr_tech__8_rating" value="4" data-label="Finition — note"><span>4</span></label><label class="star" for="scoutfr_tech__8_5"><input type="radio" id="scoutfr_tech__8_5" name="scoutfr_tech__8_rating" value="5" data-label="Finition — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__8_ev" name="scoutfr_tech__8_ev" placeholder="Preuve / observation" data-label="Finition — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__8_dp" name="scoutfr_tech__8_dp" placeholder="Priorité de développement" data-label="Finition — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Jeu aérien</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__9_1"><input type="radio" id="scoutfr_tech__9_1" name="scoutfr_tech__9_rating" value="1" data-label="Jeu aérien — rating"><span>1</span></label><label class="star" for="scoutfr_tech__9_2"><input type="radio" id="scoutfr_tech__9_2" name="scoutfr_tech__9_rating" value="2" data-label="Jeu aérien — rating"><span>2</span></label><label class="star" for="scoutfr_tech__9_3"><input type="radio" id="scoutfr_tech__9_3" name="scoutfr_tech__9_rating" value="3" data-label="Jeu aérien — rating"><span>3</span></label><label class="star" for="scoutfr_tech__9_4"><input type="radio" id="scoutfr_tech__9_4" name="scoutfr_tech__9_rating" value="4" data-label="Jeu aérien — rating"><span>4</span></label><label class="star" for="scoutfr_tech__9_5"><input type="radio" id="scoutfr_tech__9_5" name="scoutfr_tech__9_rating" value="5" data-label="Jeu aérien — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__9_ev" name="scoutfr_tech__9_ev" placeholder="Evidence / observation" data-label="Jeu aérien — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__9_dp" name="scoutfr_tech__9_dp" placeholder="Development priority" data-label="Jeu aérien — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__9_1"><input type="radio" id="scoutfr_tech__9_1" name="scoutfr_tech__9_rating" value="1" data-label="Jeu aérien — note"><span>1</span></label><label class="star" for="scoutfr_tech__9_2"><input type="radio" id="scoutfr_tech__9_2" name="scoutfr_tech__9_rating" value="2" data-label="Jeu aérien — note"><span>2</span></label><label class="star" for="scoutfr_tech__9_3"><input type="radio" id="scoutfr_tech__9_3" name="scoutfr_tech__9_rating" value="3" data-label="Jeu aérien — note"><span>3</span></label><label class="star" for="scoutfr_tech__9_4"><input type="radio" id="scoutfr_tech__9_4" name="scoutfr_tech__9_rating" value="4" data-label="Jeu aérien — note"><span>4</span></label><label class="star" for="scoutfr_tech__9_5"><input type="radio" id="scoutfr_tech__9_5" name="scoutfr_tech__9_rating" value="5" data-label="Jeu aérien — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__9_ev" name="scoutfr_tech__9_ev" placeholder="Preuve / observation" data-label="Jeu aérien — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__9_dp" name="scoutfr_tech__9_dp" placeholder="Priorité de développement" data-label="Jeu aérien — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Tacle / récupération</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__10_1"><input type="radio" id="scoutfr_tech__10_1" name="scoutfr_tech__10_rating" value="1" data-label="Tacle / récupération — rating"><span>1</span></label><label class="star" for="scoutfr_tech__10_2"><input type="radio" id="scoutfr_tech__10_2" name="scoutfr_tech__10_rating" value="2" data-label="Tacle / récupération — rating"><span>2</span></label><label class="star" for="scoutfr_tech__10_3"><input type="radio" id="scoutfr_tech__10_3" name="scoutfr_tech__10_rating" value="3" data-label="Tacle / récupération — rating"><span>3</span></label><label class="star" for="scoutfr_tech__10_4"><input type="radio" id="scoutfr_tech__10_4" name="scoutfr_tech__10_rating" value="4" data-label="Tacle / récupération — rating"><span>4</span></label><label class="star" for="scoutfr_tech__10_5"><input type="radio" id="scoutfr_tech__10_5" name="scoutfr_tech__10_rating" value="5" data-label="Tacle / récupération — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__10_ev" name="scoutfr_tech__10_ev" placeholder="Evidence / observation" data-label="Tacle / récupération — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__10_dp" name="scoutfr_tech__10_dp" placeholder="Development priority" data-label="Tacle / récupération — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__10_1"><input type="radio" id="scoutfr_tech__10_1" name="scoutfr_tech__10_rating" value="1" data-label="Tacle / récupération — note"><span>1</span></label><label class="star" for="scoutfr_tech__10_2"><input type="radio" id="scoutfr_tech__10_2" name="scoutfr_tech__10_rating" value="2" data-label="Tacle / récupération — note"><span>2</span></label><label class="star" for="scoutfr_tech__10_3"><input type="radio" id="scoutfr_tech__10_3" name="scoutfr_tech__10_rating" value="3" data-label="Tacle / récupération — note"><span>3</span></label><label class="star" for="scoutfr_tech__10_4"><input type="radio" id="scoutfr_tech__10_4" name="scoutfr_tech__10_rating" value="4" data-label="Tacle / récupération — note"><span>4</span></label><label class="star" for="scoutfr_tech__10_5"><input type="radio" id="scoutfr_tech__10_5" name="scoutfr_tech__10_rating" value="5" data-label="Tacle / récupération — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__10_ev" name="scoutfr_tech__10_ev" placeholder="Preuve / observation" data-label="Tacle / récupération — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__10_dp" name="scoutfr_tech__10_dp" placeholder="Priorité de développement" data-label="Tacle / récupération — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Résistance au pressing</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tech__11_1"><input type="radio" id="scoutfr_tech__11_1" name="scoutfr_tech__11_rating" value="1" data-label="Résistance au pressing — rating"><span>1</span></label><label class="star" for="scoutfr_tech__11_2"><input type="radio" id="scoutfr_tech__11_2" name="scoutfr_tech__11_rating" value="2" data-label="Résistance au pressing — rating"><span>2</span></label><label class="star" for="scoutfr_tech__11_3"><input type="radio" id="scoutfr_tech__11_3" name="scoutfr_tech__11_rating" value="3" data-label="Résistance au pressing — rating"><span>3</span></label><label class="star" for="scoutfr_tech__11_4"><input type="radio" id="scoutfr_tech__11_4" name="scoutfr_tech__11_rating" value="4" data-label="Résistance au pressing — rating"><span>4</span></label><label class="star" for="scoutfr_tech__11_5"><input type="radio" id="scoutfr_tech__11_5" name="scoutfr_tech__11_rating" value="5" data-label="Résistance au pressing — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tech__11_ev" name="scoutfr_tech__11_ev" placeholder="Evidence / observation" data-label="Résistance au pressing — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tech__11_dp" name="scoutfr_tech__11_dp" placeholder="Development priority" data-label="Résistance au pressing — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tech__11_1"><input type="radio" id="scoutfr_tech__11_1" name="scoutfr_tech__11_rating" value="1" data-label="Résistance au pressing — note"><span>1</span></label><label class="star" for="scoutfr_tech__11_2"><input type="radio" id="scoutfr_tech__11_2" name="scoutfr_tech__11_rating" value="2" data-label="Résistance au pressing — note"><span>2</span></label><label class="star" for="scoutfr_tech__11_3"><input type="radio" id="scoutfr_tech__11_3" name="scoutfr_tech__11_rating" value="3" data-label="Résistance au pressing — note"><span>3</span></label><label class="star" for="scoutfr_tech__11_4"><input type="radio" id="scoutfr_tech__11_4" name="scoutfr_tech__11_rating" value="4" data-label="Résistance au pressing — note"><span>4</span></label><label class="star" for="scoutfr_tech__11_5"><input type="radio" id="scoutfr_tech__11_5" name="scoutfr_tech__11_rating" value="5" data-label="Résistance au pressing — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tech__11_ev" name="scoutfr_tech__11_ev" placeholder="Preuve / observation" data-label="Résistance au pressing — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tech__11_dp" name="scoutfr_tech__11_dp" placeholder="Priorité de développement" data-label="Résistance au pressing — Priorité de développement">
 </div>
 </div>
   </div>
@@ -792,79 +799,79 @@ textarea{resize:vertical;}
     
 <div class="rate-block">
   
-  <p class="hint">Rate 1–5 (1 = major development need, 3 = competitive, 5 = outstanding). Add an evidence note or development priority where it matters.</p>
+  <p class="hint">Notez de 1 à 5 (1 = besoin de développement majeur, 3 = compétitif, 5 = exceptionnel). Ajoutez une note de preuve ou une priorité de développement lorsque c’est pertinent.</p>
   
 <div class="rate-row">
   <div class="rate-attr">Scan / prise d'information</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__0_1"><input type="radio" id="scoutfr_tact__0_1" name="scoutfr_tact__0_rating" value="1" data-label="Scan / prise d'information — rating"><span>1</span></label><label class="star" for="scoutfr_tact__0_2"><input type="radio" id="scoutfr_tact__0_2" name="scoutfr_tact__0_rating" value="2" data-label="Scan / prise d'information — rating"><span>2</span></label><label class="star" for="scoutfr_tact__0_3"><input type="radio" id="scoutfr_tact__0_3" name="scoutfr_tact__0_rating" value="3" data-label="Scan / prise d'information — rating"><span>3</span></label><label class="star" for="scoutfr_tact__0_4"><input type="radio" id="scoutfr_tact__0_4" name="scoutfr_tact__0_rating" value="4" data-label="Scan / prise d'information — rating"><span>4</span></label><label class="star" for="scoutfr_tact__0_5"><input type="radio" id="scoutfr_tact__0_5" name="scoutfr_tact__0_rating" value="5" data-label="Scan / prise d'information — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__0_ev" name="scoutfr_tact__0_ev" placeholder="Evidence / observation" data-label="Scan / prise d'information — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__0_dp" name="scoutfr_tact__0_dp" placeholder="Development priority" data-label="Scan / prise d'information — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__0_1"><input type="radio" id="scoutfr_tact__0_1" name="scoutfr_tact__0_rating" value="1" data-label="Scan / prise d'information — note"><span>1</span></label><label class="star" for="scoutfr_tact__0_2"><input type="radio" id="scoutfr_tact__0_2" name="scoutfr_tact__0_rating" value="2" data-label="Scan / prise d'information — note"><span>2</span></label><label class="star" for="scoutfr_tact__0_3"><input type="radio" id="scoutfr_tact__0_3" name="scoutfr_tact__0_rating" value="3" data-label="Scan / prise d'information — note"><span>3</span></label><label class="star" for="scoutfr_tact__0_4"><input type="radio" id="scoutfr_tact__0_4" name="scoutfr_tact__0_rating" value="4" data-label="Scan / prise d'information — note"><span>4</span></label><label class="star" for="scoutfr_tact__0_5"><input type="radio" id="scoutfr_tact__0_5" name="scoutfr_tact__0_rating" value="5" data-label="Scan / prise d'information — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__0_ev" name="scoutfr_tact__0_ev" placeholder="Preuve / observation" data-label="Scan / prise d'information — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__0_dp" name="scoutfr_tact__0_dp" placeholder="Priorité de développement" data-label="Scan / prise d'information — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Vitesse de décision</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__1_1"><input type="radio" id="scoutfr_tact__1_1" name="scoutfr_tact__1_rating" value="1" data-label="Vitesse de décision — rating"><span>1</span></label><label class="star" for="scoutfr_tact__1_2"><input type="radio" id="scoutfr_tact__1_2" name="scoutfr_tact__1_rating" value="2" data-label="Vitesse de décision — rating"><span>2</span></label><label class="star" for="scoutfr_tact__1_3"><input type="radio" id="scoutfr_tact__1_3" name="scoutfr_tact__1_rating" value="3" data-label="Vitesse de décision — rating"><span>3</span></label><label class="star" for="scoutfr_tact__1_4"><input type="radio" id="scoutfr_tact__1_4" name="scoutfr_tact__1_rating" value="4" data-label="Vitesse de décision — rating"><span>4</span></label><label class="star" for="scoutfr_tact__1_5"><input type="radio" id="scoutfr_tact__1_5" name="scoutfr_tact__1_rating" value="5" data-label="Vitesse de décision — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__1_ev" name="scoutfr_tact__1_ev" placeholder="Evidence / observation" data-label="Vitesse de décision — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__1_dp" name="scoutfr_tact__1_dp" placeholder="Development priority" data-label="Vitesse de décision — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__1_1"><input type="radio" id="scoutfr_tact__1_1" name="scoutfr_tact__1_rating" value="1" data-label="Vitesse de décision — note"><span>1</span></label><label class="star" for="scoutfr_tact__1_2"><input type="radio" id="scoutfr_tact__1_2" name="scoutfr_tact__1_rating" value="2" data-label="Vitesse de décision — note"><span>2</span></label><label class="star" for="scoutfr_tact__1_3"><input type="radio" id="scoutfr_tact__1_3" name="scoutfr_tact__1_rating" value="3" data-label="Vitesse de décision — note"><span>3</span></label><label class="star" for="scoutfr_tact__1_4"><input type="radio" id="scoutfr_tact__1_4" name="scoutfr_tact__1_rating" value="4" data-label="Vitesse de décision — note"><span>4</span></label><label class="star" for="scoutfr_tact__1_5"><input type="radio" id="scoutfr_tact__1_5" name="scoutfr_tact__1_rating" value="5" data-label="Vitesse de décision — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__1_ev" name="scoutfr_tact__1_ev" placeholder="Preuve / observation" data-label="Vitesse de décision — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__1_dp" name="scoutfr_tact__1_dp" placeholder="Priorité de développement" data-label="Vitesse de décision — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Placement</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__2_1"><input type="radio" id="scoutfr_tact__2_1" name="scoutfr_tact__2_rating" value="1" data-label="Placement — rating"><span>1</span></label><label class="star" for="scoutfr_tact__2_2"><input type="radio" id="scoutfr_tact__2_2" name="scoutfr_tact__2_rating" value="2" data-label="Placement — rating"><span>2</span></label><label class="star" for="scoutfr_tact__2_3"><input type="radio" id="scoutfr_tact__2_3" name="scoutfr_tact__2_rating" value="3" data-label="Placement — rating"><span>3</span></label><label class="star" for="scoutfr_tact__2_4"><input type="radio" id="scoutfr_tact__2_4" name="scoutfr_tact__2_rating" value="4" data-label="Placement — rating"><span>4</span></label><label class="star" for="scoutfr_tact__2_5"><input type="radio" id="scoutfr_tact__2_5" name="scoutfr_tact__2_rating" value="5" data-label="Placement — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__2_ev" name="scoutfr_tact__2_ev" placeholder="Evidence / observation" data-label="Placement — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__2_dp" name="scoutfr_tact__2_dp" placeholder="Development priority" data-label="Placement — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__2_1"><input type="radio" id="scoutfr_tact__2_1" name="scoutfr_tact__2_rating" value="1" data-label="Placement — note"><span>1</span></label><label class="star" for="scoutfr_tact__2_2"><input type="radio" id="scoutfr_tact__2_2" name="scoutfr_tact__2_rating" value="2" data-label="Placement — note"><span>2</span></label><label class="star" for="scoutfr_tact__2_3"><input type="radio" id="scoutfr_tact__2_3" name="scoutfr_tact__2_rating" value="3" data-label="Placement — note"><span>3</span></label><label class="star" for="scoutfr_tact__2_4"><input type="radio" id="scoutfr_tact__2_4" name="scoutfr_tact__2_rating" value="4" data-label="Placement — note"><span>4</span></label><label class="star" for="scoutfr_tact__2_5"><input type="radio" id="scoutfr_tact__2_5" name="scoutfr_tact__2_rating" value="5" data-label="Placement — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__2_ev" name="scoutfr_tact__2_ev" placeholder="Preuve / observation" data-label="Placement — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__2_dp" name="scoutfr_tact__2_dp" placeholder="Priorité de développement" data-label="Placement — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Discipline de rôle</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__3_1"><input type="radio" id="scoutfr_tact__3_1" name="scoutfr_tact__3_rating" value="1" data-label="Discipline de rôle — rating"><span>1</span></label><label class="star" for="scoutfr_tact__3_2"><input type="radio" id="scoutfr_tact__3_2" name="scoutfr_tact__3_rating" value="2" data-label="Discipline de rôle — rating"><span>2</span></label><label class="star" for="scoutfr_tact__3_3"><input type="radio" id="scoutfr_tact__3_3" name="scoutfr_tact__3_rating" value="3" data-label="Discipline de rôle — rating"><span>3</span></label><label class="star" for="scoutfr_tact__3_4"><input type="radio" id="scoutfr_tact__3_4" name="scoutfr_tact__3_rating" value="4" data-label="Discipline de rôle — rating"><span>4</span></label><label class="star" for="scoutfr_tact__3_5"><input type="radio" id="scoutfr_tact__3_5" name="scoutfr_tact__3_rating" value="5" data-label="Discipline de rôle — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__3_ev" name="scoutfr_tact__3_ev" placeholder="Evidence / observation" data-label="Discipline de rôle — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__3_dp" name="scoutfr_tact__3_dp" placeholder="Development priority" data-label="Discipline de rôle — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__3_1"><input type="radio" id="scoutfr_tact__3_1" name="scoutfr_tact__3_rating" value="1" data-label="Discipline de rôle — note"><span>1</span></label><label class="star" for="scoutfr_tact__3_2"><input type="radio" id="scoutfr_tact__3_2" name="scoutfr_tact__3_rating" value="2" data-label="Discipline de rôle — note"><span>2</span></label><label class="star" for="scoutfr_tact__3_3"><input type="radio" id="scoutfr_tact__3_3" name="scoutfr_tact__3_rating" value="3" data-label="Discipline de rôle — note"><span>3</span></label><label class="star" for="scoutfr_tact__3_4"><input type="radio" id="scoutfr_tact__3_4" name="scoutfr_tact__3_rating" value="4" data-label="Discipline de rôle — note"><span>4</span></label><label class="star" for="scoutfr_tact__3_5"><input type="radio" id="scoutfr_tact__3_5" name="scoutfr_tact__3_rating" value="5" data-label="Discipline de rôle — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__3_ev" name="scoutfr_tact__3_ev" placeholder="Preuve / observation" data-label="Discipline de rôle — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__3_dp" name="scoutfr_tact__3_dp" placeholder="Priorité de développement" data-label="Discipline de rôle — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Mouvement sans ballon</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__4_1"><input type="radio" id="scoutfr_tact__4_1" name="scoutfr_tact__4_rating" value="1" data-label="Mouvement sans ballon — rating"><span>1</span></label><label class="star" for="scoutfr_tact__4_2"><input type="radio" id="scoutfr_tact__4_2" name="scoutfr_tact__4_rating" value="2" data-label="Mouvement sans ballon — rating"><span>2</span></label><label class="star" for="scoutfr_tact__4_3"><input type="radio" id="scoutfr_tact__4_3" name="scoutfr_tact__4_rating" value="3" data-label="Mouvement sans ballon — rating"><span>3</span></label><label class="star" for="scoutfr_tact__4_4"><input type="radio" id="scoutfr_tact__4_4" name="scoutfr_tact__4_rating" value="4" data-label="Mouvement sans ballon — rating"><span>4</span></label><label class="star" for="scoutfr_tact__4_5"><input type="radio" id="scoutfr_tact__4_5" name="scoutfr_tact__4_rating" value="5" data-label="Mouvement sans ballon — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__4_ev" name="scoutfr_tact__4_ev" placeholder="Evidence / observation" data-label="Mouvement sans ballon — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__4_dp" name="scoutfr_tact__4_dp" placeholder="Development priority" data-label="Mouvement sans ballon — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__4_1"><input type="radio" id="scoutfr_tact__4_1" name="scoutfr_tact__4_rating" value="1" data-label="Mouvement sans ballon — note"><span>1</span></label><label class="star" for="scoutfr_tact__4_2"><input type="radio" id="scoutfr_tact__4_2" name="scoutfr_tact__4_rating" value="2" data-label="Mouvement sans ballon — note"><span>2</span></label><label class="star" for="scoutfr_tact__4_3"><input type="radio" id="scoutfr_tact__4_3" name="scoutfr_tact__4_rating" value="3" data-label="Mouvement sans ballon — note"><span>3</span></label><label class="star" for="scoutfr_tact__4_4"><input type="radio" id="scoutfr_tact__4_4" name="scoutfr_tact__4_rating" value="4" data-label="Mouvement sans ballon — note"><span>4</span></label><label class="star" for="scoutfr_tact__4_5"><input type="radio" id="scoutfr_tact__4_5" name="scoutfr_tact__4_rating" value="5" data-label="Mouvement sans ballon — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__4_ev" name="scoutfr_tact__4_ev" placeholder="Preuve / observation" data-label="Mouvement sans ballon — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__4_dp" name="scoutfr_tact__4_dp" placeholder="Priorité de développement" data-label="Mouvement sans ballon — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Reconnaissance de l'espace</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__5_1"><input type="radio" id="scoutfr_tact__5_1" name="scoutfr_tact__5_rating" value="1" data-label="Reconnaissance de l'espace — rating"><span>1</span></label><label class="star" for="scoutfr_tact__5_2"><input type="radio" id="scoutfr_tact__5_2" name="scoutfr_tact__5_rating" value="2" data-label="Reconnaissance de l'espace — rating"><span>2</span></label><label class="star" for="scoutfr_tact__5_3"><input type="radio" id="scoutfr_tact__5_3" name="scoutfr_tact__5_rating" value="3" data-label="Reconnaissance de l'espace — rating"><span>3</span></label><label class="star" for="scoutfr_tact__5_4"><input type="radio" id="scoutfr_tact__5_4" name="scoutfr_tact__5_rating" value="4" data-label="Reconnaissance de l'espace — rating"><span>4</span></label><label class="star" for="scoutfr_tact__5_5"><input type="radio" id="scoutfr_tact__5_5" name="scoutfr_tact__5_rating" value="5" data-label="Reconnaissance de l'espace — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__5_ev" name="scoutfr_tact__5_ev" placeholder="Evidence / observation" data-label="Reconnaissance de l'espace — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__5_dp" name="scoutfr_tact__5_dp" placeholder="Development priority" data-label="Reconnaissance de l'espace — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__5_1"><input type="radio" id="scoutfr_tact__5_1" name="scoutfr_tact__5_rating" value="1" data-label="Reconnaissance de l'espace — note"><span>1</span></label><label class="star" for="scoutfr_tact__5_2"><input type="radio" id="scoutfr_tact__5_2" name="scoutfr_tact__5_rating" value="2" data-label="Reconnaissance de l'espace — note"><span>2</span></label><label class="star" for="scoutfr_tact__5_3"><input type="radio" id="scoutfr_tact__5_3" name="scoutfr_tact__5_rating" value="3" data-label="Reconnaissance de l'espace — note"><span>3</span></label><label class="star" for="scoutfr_tact__5_4"><input type="radio" id="scoutfr_tact__5_4" name="scoutfr_tact__5_rating" value="4" data-label="Reconnaissance de l'espace — note"><span>4</span></label><label class="star" for="scoutfr_tact__5_5"><input type="radio" id="scoutfr_tact__5_5" name="scoutfr_tact__5_rating" value="5" data-label="Reconnaissance de l'espace — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__5_ev" name="scoutfr_tact__5_ev" placeholder="Preuve / observation" data-label="Reconnaissance de l'espace — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__5_dp" name="scoutfr_tact__5_dp" placeholder="Priorité de développement" data-label="Reconnaissance de l'espace — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Décisions en relance</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__6_1"><input type="radio" id="scoutfr_tact__6_1" name="scoutfr_tact__6_rating" value="1" data-label="Décisions en relance — rating"><span>1</span></label><label class="star" for="scoutfr_tact__6_2"><input type="radio" id="scoutfr_tact__6_2" name="scoutfr_tact__6_rating" value="2" data-label="Décisions en relance — rating"><span>2</span></label><label class="star" for="scoutfr_tact__6_3"><input type="radio" id="scoutfr_tact__6_3" name="scoutfr_tact__6_rating" value="3" data-label="Décisions en relance — rating"><span>3</span></label><label class="star" for="scoutfr_tact__6_4"><input type="radio" id="scoutfr_tact__6_4" name="scoutfr_tact__6_rating" value="4" data-label="Décisions en relance — rating"><span>4</span></label><label class="star" for="scoutfr_tact__6_5"><input type="radio" id="scoutfr_tact__6_5" name="scoutfr_tact__6_rating" value="5" data-label="Décisions en relance — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__6_ev" name="scoutfr_tact__6_ev" placeholder="Evidence / observation" data-label="Décisions en relance — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__6_dp" name="scoutfr_tact__6_dp" placeholder="Development priority" data-label="Décisions en relance — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__6_1"><input type="radio" id="scoutfr_tact__6_1" name="scoutfr_tact__6_rating" value="1" data-label="Décisions en relance — note"><span>1</span></label><label class="star" for="scoutfr_tact__6_2"><input type="radio" id="scoutfr_tact__6_2" name="scoutfr_tact__6_rating" value="2" data-label="Décisions en relance — note"><span>2</span></label><label class="star" for="scoutfr_tact__6_3"><input type="radio" id="scoutfr_tact__6_3" name="scoutfr_tact__6_rating" value="3" data-label="Décisions en relance — note"><span>3</span></label><label class="star" for="scoutfr_tact__6_4"><input type="radio" id="scoutfr_tact__6_4" name="scoutfr_tact__6_rating" value="4" data-label="Décisions en relance — note"><span>4</span></label><label class="star" for="scoutfr_tact__6_5"><input type="radio" id="scoutfr_tact__6_5" name="scoutfr_tact__6_rating" value="5" data-label="Décisions en relance — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__6_ev" name="scoutfr_tact__6_ev" placeholder="Preuve / observation" data-label="Décisions en relance — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__6_dp" name="scoutfr_tact__6_dp" placeholder="Priorité de développement" data-label="Décisions en relance — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Décisions dans le dernier tiers</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__7_1"><input type="radio" id="scoutfr_tact__7_1" name="scoutfr_tact__7_rating" value="1" data-label="Décisions dans le dernier tiers — rating"><span>1</span></label><label class="star" for="scoutfr_tact__7_2"><input type="radio" id="scoutfr_tact__7_2" name="scoutfr_tact__7_rating" value="2" data-label="Décisions dans le dernier tiers — rating"><span>2</span></label><label class="star" for="scoutfr_tact__7_3"><input type="radio" id="scoutfr_tact__7_3" name="scoutfr_tact__7_rating" value="3" data-label="Décisions dans le dernier tiers — rating"><span>3</span></label><label class="star" for="scoutfr_tact__7_4"><input type="radio" id="scoutfr_tact__7_4" name="scoutfr_tact__7_rating" value="4" data-label="Décisions dans le dernier tiers — rating"><span>4</span></label><label class="star" for="scoutfr_tact__7_5"><input type="radio" id="scoutfr_tact__7_5" name="scoutfr_tact__7_rating" value="5" data-label="Décisions dans le dernier tiers — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__7_ev" name="scoutfr_tact__7_ev" placeholder="Evidence / observation" data-label="Décisions dans le dernier tiers — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__7_dp" name="scoutfr_tact__7_dp" placeholder="Development priority" data-label="Décisions dans le dernier tiers — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__7_1"><input type="radio" id="scoutfr_tact__7_1" name="scoutfr_tact__7_rating" value="1" data-label="Décisions dans le dernier tiers — note"><span>1</span></label><label class="star" for="scoutfr_tact__7_2"><input type="radio" id="scoutfr_tact__7_2" name="scoutfr_tact__7_rating" value="2" data-label="Décisions dans le dernier tiers — note"><span>2</span></label><label class="star" for="scoutfr_tact__7_3"><input type="radio" id="scoutfr_tact__7_3" name="scoutfr_tact__7_rating" value="3" data-label="Décisions dans le dernier tiers — note"><span>3</span></label><label class="star" for="scoutfr_tact__7_4"><input type="radio" id="scoutfr_tact__7_4" name="scoutfr_tact__7_rating" value="4" data-label="Décisions dans le dernier tiers — note"><span>4</span></label><label class="star" for="scoutfr_tact__7_5"><input type="radio" id="scoutfr_tact__7_5" name="scoutfr_tact__7_rating" value="5" data-label="Décisions dans le dernier tiers — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__7_ev" name="scoutfr_tact__7_ev" placeholder="Preuve / observation" data-label="Décisions dans le dernier tiers — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__7_dp" name="scoutfr_tact__7_dp" placeholder="Priorité de développement" data-label="Décisions dans le dernier tiers — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Compréhension du pressing</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__8_1"><input type="radio" id="scoutfr_tact__8_1" name="scoutfr_tact__8_rating" value="1" data-label="Compréhension du pressing — rating"><span>1</span></label><label class="star" for="scoutfr_tact__8_2"><input type="radio" id="scoutfr_tact__8_2" name="scoutfr_tact__8_rating" value="2" data-label="Compréhension du pressing — rating"><span>2</span></label><label class="star" for="scoutfr_tact__8_3"><input type="radio" id="scoutfr_tact__8_3" name="scoutfr_tact__8_rating" value="3" data-label="Compréhension du pressing — rating"><span>3</span></label><label class="star" for="scoutfr_tact__8_4"><input type="radio" id="scoutfr_tact__8_4" name="scoutfr_tact__8_rating" value="4" data-label="Compréhension du pressing — rating"><span>4</span></label><label class="star" for="scoutfr_tact__8_5"><input type="radio" id="scoutfr_tact__8_5" name="scoutfr_tact__8_rating" value="5" data-label="Compréhension du pressing — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__8_ev" name="scoutfr_tact__8_ev" placeholder="Evidence / observation" data-label="Compréhension du pressing — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__8_dp" name="scoutfr_tact__8_dp" placeholder="Development priority" data-label="Compréhension du pressing — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__8_1"><input type="radio" id="scoutfr_tact__8_1" name="scoutfr_tact__8_rating" value="1" data-label="Compréhension du pressing — note"><span>1</span></label><label class="star" for="scoutfr_tact__8_2"><input type="radio" id="scoutfr_tact__8_2" name="scoutfr_tact__8_rating" value="2" data-label="Compréhension du pressing — note"><span>2</span></label><label class="star" for="scoutfr_tact__8_3"><input type="radio" id="scoutfr_tact__8_3" name="scoutfr_tact__8_rating" value="3" data-label="Compréhension du pressing — note"><span>3</span></label><label class="star" for="scoutfr_tact__8_4"><input type="radio" id="scoutfr_tact__8_4" name="scoutfr_tact__8_rating" value="4" data-label="Compréhension du pressing — note"><span>4</span></label><label class="star" for="scoutfr_tact__8_5"><input type="radio" id="scoutfr_tact__8_5" name="scoutfr_tact__8_rating" value="5" data-label="Compréhension du pressing — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__8_ev" name="scoutfr_tact__8_ev" placeholder="Preuve / observation" data-label="Compréhension du pressing — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__8_dp" name="scoutfr_tact__8_dp" placeholder="Priorité de développement" data-label="Compréhension du pressing — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Anticipation défensive</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__9_1"><input type="radio" id="scoutfr_tact__9_1" name="scoutfr_tact__9_rating" value="1" data-label="Anticipation défensive — rating"><span>1</span></label><label class="star" for="scoutfr_tact__9_2"><input type="radio" id="scoutfr_tact__9_2" name="scoutfr_tact__9_rating" value="2" data-label="Anticipation défensive — rating"><span>2</span></label><label class="star" for="scoutfr_tact__9_3"><input type="radio" id="scoutfr_tact__9_3" name="scoutfr_tact__9_rating" value="3" data-label="Anticipation défensive — rating"><span>3</span></label><label class="star" for="scoutfr_tact__9_4"><input type="radio" id="scoutfr_tact__9_4" name="scoutfr_tact__9_rating" value="4" data-label="Anticipation défensive — rating"><span>4</span></label><label class="star" for="scoutfr_tact__9_5"><input type="radio" id="scoutfr_tact__9_5" name="scoutfr_tact__9_rating" value="5" data-label="Anticipation défensive — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__9_ev" name="scoutfr_tact__9_ev" placeholder="Evidence / observation" data-label="Anticipation défensive — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__9_dp" name="scoutfr_tact__9_dp" placeholder="Development priority" data-label="Anticipation défensive — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__9_1"><input type="radio" id="scoutfr_tact__9_1" name="scoutfr_tact__9_rating" value="1" data-label="Anticipation défensive — note"><span>1</span></label><label class="star" for="scoutfr_tact__9_2"><input type="radio" id="scoutfr_tact__9_2" name="scoutfr_tact__9_rating" value="2" data-label="Anticipation défensive — note"><span>2</span></label><label class="star" for="scoutfr_tact__9_3"><input type="radio" id="scoutfr_tact__9_3" name="scoutfr_tact__9_rating" value="3" data-label="Anticipation défensive — note"><span>3</span></label><label class="star" for="scoutfr_tact__9_4"><input type="radio" id="scoutfr_tact__9_4" name="scoutfr_tact__9_rating" value="4" data-label="Anticipation défensive — note"><span>4</span></label><label class="star" for="scoutfr_tact__9_5"><input type="radio" id="scoutfr_tact__9_5" name="scoutfr_tact__9_rating" value="5" data-label="Anticipation défensive — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__9_ev" name="scoutfr_tact__9_ev" placeholder="Preuve / observation" data-label="Anticipation défensive — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__9_dp" name="scoutfr_tact__9_dp" placeholder="Priorité de développement" data-label="Anticipation défensive — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Réponse en transition</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__10_1"><input type="radio" id="scoutfr_tact__10_1" name="scoutfr_tact__10_rating" value="1" data-label="Réponse en transition — rating"><span>1</span></label><label class="star" for="scoutfr_tact__10_2"><input type="radio" id="scoutfr_tact__10_2" name="scoutfr_tact__10_rating" value="2" data-label="Réponse en transition — rating"><span>2</span></label><label class="star" for="scoutfr_tact__10_3"><input type="radio" id="scoutfr_tact__10_3" name="scoutfr_tact__10_rating" value="3" data-label="Réponse en transition — rating"><span>3</span></label><label class="star" for="scoutfr_tact__10_4"><input type="radio" id="scoutfr_tact__10_4" name="scoutfr_tact__10_rating" value="4" data-label="Réponse en transition — rating"><span>4</span></label><label class="star" for="scoutfr_tact__10_5"><input type="radio" id="scoutfr_tact__10_5" name="scoutfr_tact__10_rating" value="5" data-label="Réponse en transition — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__10_ev" name="scoutfr_tact__10_ev" placeholder="Evidence / observation" data-label="Réponse en transition — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__10_dp" name="scoutfr_tact__10_dp" placeholder="Development priority" data-label="Réponse en transition — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__10_1"><input type="radio" id="scoutfr_tact__10_1" name="scoutfr_tact__10_rating" value="1" data-label="Réponse en transition — note"><span>1</span></label><label class="star" for="scoutfr_tact__10_2"><input type="radio" id="scoutfr_tact__10_2" name="scoutfr_tact__10_rating" value="2" data-label="Réponse en transition — note"><span>2</span></label><label class="star" for="scoutfr_tact__10_3"><input type="radio" id="scoutfr_tact__10_3" name="scoutfr_tact__10_rating" value="3" data-label="Réponse en transition — note"><span>3</span></label><label class="star" for="scoutfr_tact__10_4"><input type="radio" id="scoutfr_tact__10_4" name="scoutfr_tact__10_rating" value="4" data-label="Réponse en transition — note"><span>4</span></label><label class="star" for="scoutfr_tact__10_5"><input type="radio" id="scoutfr_tact__10_5" name="scoutfr_tact__10_rating" value="5" data-label="Réponse en transition — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__10_ev" name="scoutfr_tact__10_ev" placeholder="Preuve / observation" data-label="Réponse en transition — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__10_dp" name="scoutfr_tact__10_dp" placeholder="Priorité de développement" data-label="Réponse en transition — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Compréhension des phases arrêtées</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_tact__11_1"><input type="radio" id="scoutfr_tact__11_1" name="scoutfr_tact__11_rating" value="1" data-label="Compréhension des phases arrêtées — rating"><span>1</span></label><label class="star" for="scoutfr_tact__11_2"><input type="radio" id="scoutfr_tact__11_2" name="scoutfr_tact__11_rating" value="2" data-label="Compréhension des phases arrêtées — rating"><span>2</span></label><label class="star" for="scoutfr_tact__11_3"><input type="radio" id="scoutfr_tact__11_3" name="scoutfr_tact__11_rating" value="3" data-label="Compréhension des phases arrêtées — rating"><span>3</span></label><label class="star" for="scoutfr_tact__11_4"><input type="radio" id="scoutfr_tact__11_4" name="scoutfr_tact__11_rating" value="4" data-label="Compréhension des phases arrêtées — rating"><span>4</span></label><label class="star" for="scoutfr_tact__11_5"><input type="radio" id="scoutfr_tact__11_5" name="scoutfr_tact__11_rating" value="5" data-label="Compréhension des phases arrêtées — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_tact__11_ev" name="scoutfr_tact__11_ev" placeholder="Evidence / observation" data-label="Compréhension des phases arrêtées — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_tact__11_dp" name="scoutfr_tact__11_dp" placeholder="Development priority" data-label="Compréhension des phases arrêtées — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_tact__11_1"><input type="radio" id="scoutfr_tact__11_1" name="scoutfr_tact__11_rating" value="1" data-label="Compréhension des phases arrêtées — note"><span>1</span></label><label class="star" for="scoutfr_tact__11_2"><input type="radio" id="scoutfr_tact__11_2" name="scoutfr_tact__11_rating" value="2" data-label="Compréhension des phases arrêtées — note"><span>2</span></label><label class="star" for="scoutfr_tact__11_3"><input type="radio" id="scoutfr_tact__11_3" name="scoutfr_tact__11_rating" value="3" data-label="Compréhension des phases arrêtées — note"><span>3</span></label><label class="star" for="scoutfr_tact__11_4"><input type="radio" id="scoutfr_tact__11_4" name="scoutfr_tact__11_rating" value="4" data-label="Compréhension des phases arrêtées — note"><span>4</span></label><label class="star" for="scoutfr_tact__11_5"><input type="radio" id="scoutfr_tact__11_5" name="scoutfr_tact__11_rating" value="5" data-label="Compréhension des phases arrêtées — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_tact__11_ev" name="scoutfr_tact__11_ev" placeholder="Preuve / observation" data-label="Compréhension des phases arrêtées — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_tact__11_dp" name="scoutfr_tact__11_dp" placeholder="Priorité de développement" data-label="Compréhension des phases arrêtées — Priorité de développement">
 </div>
 </div>
   </div>
@@ -876,79 +883,79 @@ textarea{resize:vertical;}
     
 <div class="rate-block">
   
-  <p class="hint">Rate 1–5 (1 = major development need, 3 = competitive, 5 = outstanding). Add an evidence note or development priority where it matters.</p>
+  <p class="hint">Notez de 1 à 5 (1 = besoin de développement majeur, 3 = compétitif, 5 = exceptionnel). Ajoutez une note de preuve ou une priorité de développement lorsque c’est pertinent.</p>
   
 <div class="rate-row">
   <div class="rate-attr">Accélération</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__0_1"><input type="radio" id="scoutfr_phys__0_1" name="scoutfr_phys__0_rating" value="1" data-label="Accélération — rating"><span>1</span></label><label class="star" for="scoutfr_phys__0_2"><input type="radio" id="scoutfr_phys__0_2" name="scoutfr_phys__0_rating" value="2" data-label="Accélération — rating"><span>2</span></label><label class="star" for="scoutfr_phys__0_3"><input type="radio" id="scoutfr_phys__0_3" name="scoutfr_phys__0_rating" value="3" data-label="Accélération — rating"><span>3</span></label><label class="star" for="scoutfr_phys__0_4"><input type="radio" id="scoutfr_phys__0_4" name="scoutfr_phys__0_rating" value="4" data-label="Accélération — rating"><span>4</span></label><label class="star" for="scoutfr_phys__0_5"><input type="radio" id="scoutfr_phys__0_5" name="scoutfr_phys__0_rating" value="5" data-label="Accélération — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__0_ev" name="scoutfr_phys__0_ev" placeholder="Evidence / observation" data-label="Accélération — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__0_dp" name="scoutfr_phys__0_dp" placeholder="Development priority" data-label="Accélération — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__0_1"><input type="radio" id="scoutfr_phys__0_1" name="scoutfr_phys__0_rating" value="1" data-label="Accélération — note"><span>1</span></label><label class="star" for="scoutfr_phys__0_2"><input type="radio" id="scoutfr_phys__0_2" name="scoutfr_phys__0_rating" value="2" data-label="Accélération — note"><span>2</span></label><label class="star" for="scoutfr_phys__0_3"><input type="radio" id="scoutfr_phys__0_3" name="scoutfr_phys__0_rating" value="3" data-label="Accélération — note"><span>3</span></label><label class="star" for="scoutfr_phys__0_4"><input type="radio" id="scoutfr_phys__0_4" name="scoutfr_phys__0_rating" value="4" data-label="Accélération — note"><span>4</span></label><label class="star" for="scoutfr_phys__0_5"><input type="radio" id="scoutfr_phys__0_5" name="scoutfr_phys__0_rating" value="5" data-label="Accélération — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__0_ev" name="scoutfr_phys__0_ev" placeholder="Preuve / observation" data-label="Accélération — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__0_dp" name="scoutfr_phys__0_dp" placeholder="Priorité de développement" data-label="Accélération — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Vitesse de pointe</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__1_1"><input type="radio" id="scoutfr_phys__1_1" name="scoutfr_phys__1_rating" value="1" data-label="Vitesse de pointe — rating"><span>1</span></label><label class="star" for="scoutfr_phys__1_2"><input type="radio" id="scoutfr_phys__1_2" name="scoutfr_phys__1_rating" value="2" data-label="Vitesse de pointe — rating"><span>2</span></label><label class="star" for="scoutfr_phys__1_3"><input type="radio" id="scoutfr_phys__1_3" name="scoutfr_phys__1_rating" value="3" data-label="Vitesse de pointe — rating"><span>3</span></label><label class="star" for="scoutfr_phys__1_4"><input type="radio" id="scoutfr_phys__1_4" name="scoutfr_phys__1_rating" value="4" data-label="Vitesse de pointe — rating"><span>4</span></label><label class="star" for="scoutfr_phys__1_5"><input type="radio" id="scoutfr_phys__1_5" name="scoutfr_phys__1_rating" value="5" data-label="Vitesse de pointe — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__1_ev" name="scoutfr_phys__1_ev" placeholder="Evidence / observation" data-label="Vitesse de pointe — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__1_dp" name="scoutfr_phys__1_dp" placeholder="Development priority" data-label="Vitesse de pointe — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__1_1"><input type="radio" id="scoutfr_phys__1_1" name="scoutfr_phys__1_rating" value="1" data-label="Vitesse de pointe — note"><span>1</span></label><label class="star" for="scoutfr_phys__1_2"><input type="radio" id="scoutfr_phys__1_2" name="scoutfr_phys__1_rating" value="2" data-label="Vitesse de pointe — note"><span>2</span></label><label class="star" for="scoutfr_phys__1_3"><input type="radio" id="scoutfr_phys__1_3" name="scoutfr_phys__1_rating" value="3" data-label="Vitesse de pointe — note"><span>3</span></label><label class="star" for="scoutfr_phys__1_4"><input type="radio" id="scoutfr_phys__1_4" name="scoutfr_phys__1_rating" value="4" data-label="Vitesse de pointe — note"><span>4</span></label><label class="star" for="scoutfr_phys__1_5"><input type="radio" id="scoutfr_phys__1_5" name="scoutfr_phys__1_rating" value="5" data-label="Vitesse de pointe — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__1_ev" name="scoutfr_phys__1_ev" placeholder="Preuve / observation" data-label="Vitesse de pointe — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__1_dp" name="scoutfr_phys__1_dp" placeholder="Priorité de développement" data-label="Vitesse de pointe — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Agilité / changement de direction</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__2_1"><input type="radio" id="scoutfr_phys__2_1" name="scoutfr_phys__2_rating" value="1" data-label="Agilité / changement de direction — rating"><span>1</span></label><label class="star" for="scoutfr_phys__2_2"><input type="radio" id="scoutfr_phys__2_2" name="scoutfr_phys__2_rating" value="2" data-label="Agilité / changement de direction — rating"><span>2</span></label><label class="star" for="scoutfr_phys__2_3"><input type="radio" id="scoutfr_phys__2_3" name="scoutfr_phys__2_rating" value="3" data-label="Agilité / changement de direction — rating"><span>3</span></label><label class="star" for="scoutfr_phys__2_4"><input type="radio" id="scoutfr_phys__2_4" name="scoutfr_phys__2_rating" value="4" data-label="Agilité / changement de direction — rating"><span>4</span></label><label class="star" for="scoutfr_phys__2_5"><input type="radio" id="scoutfr_phys__2_5" name="scoutfr_phys__2_rating" value="5" data-label="Agilité / changement de direction — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__2_ev" name="scoutfr_phys__2_ev" placeholder="Evidence / observation" data-label="Agilité / changement de direction — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__2_dp" name="scoutfr_phys__2_dp" placeholder="Development priority" data-label="Agilité / changement de direction — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__2_1"><input type="radio" id="scoutfr_phys__2_1" name="scoutfr_phys__2_rating" value="1" data-label="Agilité / changement de direction — note"><span>1</span></label><label class="star" for="scoutfr_phys__2_2"><input type="radio" id="scoutfr_phys__2_2" name="scoutfr_phys__2_rating" value="2" data-label="Agilité / changement de direction — note"><span>2</span></label><label class="star" for="scoutfr_phys__2_3"><input type="radio" id="scoutfr_phys__2_3" name="scoutfr_phys__2_rating" value="3" data-label="Agilité / changement de direction — note"><span>3</span></label><label class="star" for="scoutfr_phys__2_4"><input type="radio" id="scoutfr_phys__2_4" name="scoutfr_phys__2_rating" value="4" data-label="Agilité / changement de direction — note"><span>4</span></label><label class="star" for="scoutfr_phys__2_5"><input type="radio" id="scoutfr_phys__2_5" name="scoutfr_phys__2_rating" value="5" data-label="Agilité / changement de direction — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__2_ev" name="scoutfr_phys__2_ev" placeholder="Preuve / observation" data-label="Agilité / changement de direction — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__2_dp" name="scoutfr_phys__2_dp" placeholder="Priorité de développement" data-label="Agilité / changement de direction — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Force</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__3_1"><input type="radio" id="scoutfr_phys__3_1" name="scoutfr_phys__3_rating" value="1" data-label="Force — rating"><span>1</span></label><label class="star" for="scoutfr_phys__3_2"><input type="radio" id="scoutfr_phys__3_2" name="scoutfr_phys__3_rating" value="2" data-label="Force — rating"><span>2</span></label><label class="star" for="scoutfr_phys__3_3"><input type="radio" id="scoutfr_phys__3_3" name="scoutfr_phys__3_rating" value="3" data-label="Force — rating"><span>3</span></label><label class="star" for="scoutfr_phys__3_4"><input type="radio" id="scoutfr_phys__3_4" name="scoutfr_phys__3_rating" value="4" data-label="Force — rating"><span>4</span></label><label class="star" for="scoutfr_phys__3_5"><input type="radio" id="scoutfr_phys__3_5" name="scoutfr_phys__3_rating" value="5" data-label="Force — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__3_ev" name="scoutfr_phys__3_ev" placeholder="Evidence / observation" data-label="Force — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__3_dp" name="scoutfr_phys__3_dp" placeholder="Development priority" data-label="Force — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__3_1"><input type="radio" id="scoutfr_phys__3_1" name="scoutfr_phys__3_rating" value="1" data-label="Force — note"><span>1</span></label><label class="star" for="scoutfr_phys__3_2"><input type="radio" id="scoutfr_phys__3_2" name="scoutfr_phys__3_rating" value="2" data-label="Force — note"><span>2</span></label><label class="star" for="scoutfr_phys__3_3"><input type="radio" id="scoutfr_phys__3_3" name="scoutfr_phys__3_rating" value="3" data-label="Force — note"><span>3</span></label><label class="star" for="scoutfr_phys__3_4"><input type="radio" id="scoutfr_phys__3_4" name="scoutfr_phys__3_rating" value="4" data-label="Force — note"><span>4</span></label><label class="star" for="scoutfr_phys__3_5"><input type="radio" id="scoutfr_phys__3_5" name="scoutfr_phys__3_rating" value="5" data-label="Force — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__3_ev" name="scoutfr_phys__3_ev" placeholder="Preuve / observation" data-label="Force — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__3_dp" name="scoutfr_phys__3_dp" placeholder="Priorité de développement" data-label="Force — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Équilibre au contact</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__4_1"><input type="radio" id="scoutfr_phys__4_1" name="scoutfr_phys__4_rating" value="1" data-label="Équilibre au contact — rating"><span>1</span></label><label class="star" for="scoutfr_phys__4_2"><input type="radio" id="scoutfr_phys__4_2" name="scoutfr_phys__4_rating" value="2" data-label="Équilibre au contact — rating"><span>2</span></label><label class="star" for="scoutfr_phys__4_3"><input type="radio" id="scoutfr_phys__4_3" name="scoutfr_phys__4_rating" value="3" data-label="Équilibre au contact — rating"><span>3</span></label><label class="star" for="scoutfr_phys__4_4"><input type="radio" id="scoutfr_phys__4_4" name="scoutfr_phys__4_rating" value="4" data-label="Équilibre au contact — rating"><span>4</span></label><label class="star" for="scoutfr_phys__4_5"><input type="radio" id="scoutfr_phys__4_5" name="scoutfr_phys__4_rating" value="5" data-label="Équilibre au contact — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__4_ev" name="scoutfr_phys__4_ev" placeholder="Evidence / observation" data-label="Équilibre au contact — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__4_dp" name="scoutfr_phys__4_dp" placeholder="Development priority" data-label="Équilibre au contact — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__4_1"><input type="radio" id="scoutfr_phys__4_1" name="scoutfr_phys__4_rating" value="1" data-label="Équilibre au contact — note"><span>1</span></label><label class="star" for="scoutfr_phys__4_2"><input type="radio" id="scoutfr_phys__4_2" name="scoutfr_phys__4_rating" value="2" data-label="Équilibre au contact — note"><span>2</span></label><label class="star" for="scoutfr_phys__4_3"><input type="radio" id="scoutfr_phys__4_3" name="scoutfr_phys__4_rating" value="3" data-label="Équilibre au contact — note"><span>3</span></label><label class="star" for="scoutfr_phys__4_4"><input type="radio" id="scoutfr_phys__4_4" name="scoutfr_phys__4_rating" value="4" data-label="Équilibre au contact — note"><span>4</span></label><label class="star" for="scoutfr_phys__4_5"><input type="radio" id="scoutfr_phys__4_5" name="scoutfr_phys__4_rating" value="5" data-label="Équilibre au contact — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__4_ev" name="scoutfr_phys__4_ev" placeholder="Preuve / observation" data-label="Équilibre au contact — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__4_dp" name="scoutfr_phys__4_dp" placeholder="Priorité de développement" data-label="Équilibre au contact — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Capacité aérienne</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__5_1"><input type="radio" id="scoutfr_phys__5_1" name="scoutfr_phys__5_rating" value="1" data-label="Capacité aérienne — rating"><span>1</span></label><label class="star" for="scoutfr_phys__5_2"><input type="radio" id="scoutfr_phys__5_2" name="scoutfr_phys__5_rating" value="2" data-label="Capacité aérienne — rating"><span>2</span></label><label class="star" for="scoutfr_phys__5_3"><input type="radio" id="scoutfr_phys__5_3" name="scoutfr_phys__5_rating" value="3" data-label="Capacité aérienne — rating"><span>3</span></label><label class="star" for="scoutfr_phys__5_4"><input type="radio" id="scoutfr_phys__5_4" name="scoutfr_phys__5_rating" value="4" data-label="Capacité aérienne — rating"><span>4</span></label><label class="star" for="scoutfr_phys__5_5"><input type="radio" id="scoutfr_phys__5_5" name="scoutfr_phys__5_rating" value="5" data-label="Capacité aérienne — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__5_ev" name="scoutfr_phys__5_ev" placeholder="Evidence / observation" data-label="Capacité aérienne — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__5_dp" name="scoutfr_phys__5_dp" placeholder="Development priority" data-label="Capacité aérienne — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__5_1"><input type="radio" id="scoutfr_phys__5_1" name="scoutfr_phys__5_rating" value="1" data-label="Capacité aérienne — note"><span>1</span></label><label class="star" for="scoutfr_phys__5_2"><input type="radio" id="scoutfr_phys__5_2" name="scoutfr_phys__5_rating" value="2" data-label="Capacité aérienne — note"><span>2</span></label><label class="star" for="scoutfr_phys__5_3"><input type="radio" id="scoutfr_phys__5_3" name="scoutfr_phys__5_rating" value="3" data-label="Capacité aérienne — note"><span>3</span></label><label class="star" for="scoutfr_phys__5_4"><input type="radio" id="scoutfr_phys__5_4" name="scoutfr_phys__5_rating" value="4" data-label="Capacité aérienne — note"><span>4</span></label><label class="star" for="scoutfr_phys__5_5"><input type="radio" id="scoutfr_phys__5_5" name="scoutfr_phys__5_rating" value="5" data-label="Capacité aérienne — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__5_ev" name="scoutfr_phys__5_ev" placeholder="Preuve / observation" data-label="Capacité aérienne — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__5_dp" name="scoutfr_phys__5_dp" placeholder="Priorité de développement" data-label="Capacité aérienne — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Capacité de sprints répétés</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__6_1"><input type="radio" id="scoutfr_phys__6_1" name="scoutfr_phys__6_rating" value="1" data-label="Capacité de sprints répétés — rating"><span>1</span></label><label class="star" for="scoutfr_phys__6_2"><input type="radio" id="scoutfr_phys__6_2" name="scoutfr_phys__6_rating" value="2" data-label="Capacité de sprints répétés — rating"><span>2</span></label><label class="star" for="scoutfr_phys__6_3"><input type="radio" id="scoutfr_phys__6_3" name="scoutfr_phys__6_rating" value="3" data-label="Capacité de sprints répétés — rating"><span>3</span></label><label class="star" for="scoutfr_phys__6_4"><input type="radio" id="scoutfr_phys__6_4" name="scoutfr_phys__6_rating" value="4" data-label="Capacité de sprints répétés — rating"><span>4</span></label><label class="star" for="scoutfr_phys__6_5"><input type="radio" id="scoutfr_phys__6_5" name="scoutfr_phys__6_rating" value="5" data-label="Capacité de sprints répétés — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__6_ev" name="scoutfr_phys__6_ev" placeholder="Evidence / observation" data-label="Capacité de sprints répétés — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__6_dp" name="scoutfr_phys__6_dp" placeholder="Development priority" data-label="Capacité de sprints répétés — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__6_1"><input type="radio" id="scoutfr_phys__6_1" name="scoutfr_phys__6_rating" value="1" data-label="Capacité de sprints répétés — note"><span>1</span></label><label class="star" for="scoutfr_phys__6_2"><input type="radio" id="scoutfr_phys__6_2" name="scoutfr_phys__6_rating" value="2" data-label="Capacité de sprints répétés — note"><span>2</span></label><label class="star" for="scoutfr_phys__6_3"><input type="radio" id="scoutfr_phys__6_3" name="scoutfr_phys__6_rating" value="3" data-label="Capacité de sprints répétés — note"><span>3</span></label><label class="star" for="scoutfr_phys__6_4"><input type="radio" id="scoutfr_phys__6_4" name="scoutfr_phys__6_rating" value="4" data-label="Capacité de sprints répétés — note"><span>4</span></label><label class="star" for="scoutfr_phys__6_5"><input type="radio" id="scoutfr_phys__6_5" name="scoutfr_phys__6_rating" value="5" data-label="Capacité de sprints répétés — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__6_ev" name="scoutfr_phys__6_ev" placeholder="Preuve / observation" data-label="Capacité de sprints répétés — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__6_dp" name="scoutfr_phys__6_dp" placeholder="Priorité de développement" data-label="Capacité de sprints répétés — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Endurance</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__7_1"><input type="radio" id="scoutfr_phys__7_1" name="scoutfr_phys__7_rating" value="1" data-label="Endurance — rating"><span>1</span></label><label class="star" for="scoutfr_phys__7_2"><input type="radio" id="scoutfr_phys__7_2" name="scoutfr_phys__7_rating" value="2" data-label="Endurance — rating"><span>2</span></label><label class="star" for="scoutfr_phys__7_3"><input type="radio" id="scoutfr_phys__7_3" name="scoutfr_phys__7_rating" value="3" data-label="Endurance — rating"><span>3</span></label><label class="star" for="scoutfr_phys__7_4"><input type="radio" id="scoutfr_phys__7_4" name="scoutfr_phys__7_rating" value="4" data-label="Endurance — rating"><span>4</span></label><label class="star" for="scoutfr_phys__7_5"><input type="radio" id="scoutfr_phys__7_5" name="scoutfr_phys__7_rating" value="5" data-label="Endurance — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__7_ev" name="scoutfr_phys__7_ev" placeholder="Evidence / observation" data-label="Endurance — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__7_dp" name="scoutfr_phys__7_dp" placeholder="Development priority" data-label="Endurance — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__7_1"><input type="radio" id="scoutfr_phys__7_1" name="scoutfr_phys__7_rating" value="1" data-label="Endurance — note"><span>1</span></label><label class="star" for="scoutfr_phys__7_2"><input type="radio" id="scoutfr_phys__7_2" name="scoutfr_phys__7_rating" value="2" data-label="Endurance — note"><span>2</span></label><label class="star" for="scoutfr_phys__7_3"><input type="radio" id="scoutfr_phys__7_3" name="scoutfr_phys__7_rating" value="3" data-label="Endurance — note"><span>3</span></label><label class="star" for="scoutfr_phys__7_4"><input type="radio" id="scoutfr_phys__7_4" name="scoutfr_phys__7_rating" value="4" data-label="Endurance — note"><span>4</span></label><label class="star" for="scoutfr_phys__7_5"><input type="radio" id="scoutfr_phys__7_5" name="scoutfr_phys__7_rating" value="5" data-label="Endurance — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__7_ev" name="scoutfr_phys__7_ev" placeholder="Preuve / observation" data-label="Endurance — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__7_dp" name="scoutfr_phys__7_dp" placeholder="Priorité de développement" data-label="Endurance — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Capacité haute intensité</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__8_1"><input type="radio" id="scoutfr_phys__8_1" name="scoutfr_phys__8_rating" value="1" data-label="Capacité haute intensité — rating"><span>1</span></label><label class="star" for="scoutfr_phys__8_2"><input type="radio" id="scoutfr_phys__8_2" name="scoutfr_phys__8_rating" value="2" data-label="Capacité haute intensité — rating"><span>2</span></label><label class="star" for="scoutfr_phys__8_3"><input type="radio" id="scoutfr_phys__8_3" name="scoutfr_phys__8_rating" value="3" data-label="Capacité haute intensité — rating"><span>3</span></label><label class="star" for="scoutfr_phys__8_4"><input type="radio" id="scoutfr_phys__8_4" name="scoutfr_phys__8_rating" value="4" data-label="Capacité haute intensité — rating"><span>4</span></label><label class="star" for="scoutfr_phys__8_5"><input type="radio" id="scoutfr_phys__8_5" name="scoutfr_phys__8_rating" value="5" data-label="Capacité haute intensité — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__8_ev" name="scoutfr_phys__8_ev" placeholder="Evidence / observation" data-label="Capacité haute intensité — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__8_dp" name="scoutfr_phys__8_dp" placeholder="Development priority" data-label="Capacité haute intensité — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__8_1"><input type="radio" id="scoutfr_phys__8_1" name="scoutfr_phys__8_rating" value="1" data-label="Capacité haute intensité — note"><span>1</span></label><label class="star" for="scoutfr_phys__8_2"><input type="radio" id="scoutfr_phys__8_2" name="scoutfr_phys__8_rating" value="2" data-label="Capacité haute intensité — note"><span>2</span></label><label class="star" for="scoutfr_phys__8_3"><input type="radio" id="scoutfr_phys__8_3" name="scoutfr_phys__8_rating" value="3" data-label="Capacité haute intensité — note"><span>3</span></label><label class="star" for="scoutfr_phys__8_4"><input type="radio" id="scoutfr_phys__8_4" name="scoutfr_phys__8_rating" value="4" data-label="Capacité haute intensité — note"><span>4</span></label><label class="star" for="scoutfr_phys__8_5"><input type="radio" id="scoutfr_phys__8_5" name="scoutfr_phys__8_rating" value="5" data-label="Capacité haute intensité — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__8_ev" name="scoutfr_phys__8_ev" placeholder="Preuve / observation" data-label="Capacité haute intensité — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__8_dp" name="scoutfr_phys__8_dp" placeholder="Priorité de développement" data-label="Capacité haute intensité — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Efficacité du mouvement</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__9_1"><input type="radio" id="scoutfr_phys__9_1" name="scoutfr_phys__9_rating" value="1" data-label="Efficacité du mouvement — rating"><span>1</span></label><label class="star" for="scoutfr_phys__9_2"><input type="radio" id="scoutfr_phys__9_2" name="scoutfr_phys__9_rating" value="2" data-label="Efficacité du mouvement — rating"><span>2</span></label><label class="star" for="scoutfr_phys__9_3"><input type="radio" id="scoutfr_phys__9_3" name="scoutfr_phys__9_rating" value="3" data-label="Efficacité du mouvement — rating"><span>3</span></label><label class="star" for="scoutfr_phys__9_4"><input type="radio" id="scoutfr_phys__9_4" name="scoutfr_phys__9_rating" value="4" data-label="Efficacité du mouvement — rating"><span>4</span></label><label class="star" for="scoutfr_phys__9_5"><input type="radio" id="scoutfr_phys__9_5" name="scoutfr_phys__9_rating" value="5" data-label="Efficacité du mouvement — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__9_ev" name="scoutfr_phys__9_ev" placeholder="Evidence / observation" data-label="Efficacité du mouvement — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__9_dp" name="scoutfr_phys__9_dp" placeholder="Development priority" data-label="Efficacité du mouvement — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__9_1"><input type="radio" id="scoutfr_phys__9_1" name="scoutfr_phys__9_rating" value="1" data-label="Efficacité du mouvement — note"><span>1</span></label><label class="star" for="scoutfr_phys__9_2"><input type="radio" id="scoutfr_phys__9_2" name="scoutfr_phys__9_rating" value="2" data-label="Efficacité du mouvement — note"><span>2</span></label><label class="star" for="scoutfr_phys__9_3"><input type="radio" id="scoutfr_phys__9_3" name="scoutfr_phys__9_rating" value="3" data-label="Efficacité du mouvement — note"><span>3</span></label><label class="star" for="scoutfr_phys__9_4"><input type="radio" id="scoutfr_phys__9_4" name="scoutfr_phys__9_rating" value="4" data-label="Efficacité du mouvement — note"><span>4</span></label><label class="star" for="scoutfr_phys__9_5"><input type="radio" id="scoutfr_phys__9_5" name="scoutfr_phys__9_rating" value="5" data-label="Efficacité du mouvement — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__9_ev" name="scoutfr_phys__9_ev" placeholder="Preuve / observation" data-label="Efficacité du mouvement — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__9_dp" name="scoutfr_phys__9_dp" placeholder="Priorité de développement" data-label="Efficacité du mouvement — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Résilience physique</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__10_1"><input type="radio" id="scoutfr_phys__10_1" name="scoutfr_phys__10_rating" value="1" data-label="Résilience physique — rating"><span>1</span></label><label class="star" for="scoutfr_phys__10_2"><input type="radio" id="scoutfr_phys__10_2" name="scoutfr_phys__10_rating" value="2" data-label="Résilience physique — rating"><span>2</span></label><label class="star" for="scoutfr_phys__10_3"><input type="radio" id="scoutfr_phys__10_3" name="scoutfr_phys__10_rating" value="3" data-label="Résilience physique — rating"><span>3</span></label><label class="star" for="scoutfr_phys__10_4"><input type="radio" id="scoutfr_phys__10_4" name="scoutfr_phys__10_rating" value="4" data-label="Résilience physique — rating"><span>4</span></label><label class="star" for="scoutfr_phys__10_5"><input type="radio" id="scoutfr_phys__10_5" name="scoutfr_phys__10_rating" value="5" data-label="Résilience physique — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__10_ev" name="scoutfr_phys__10_ev" placeholder="Evidence / observation" data-label="Résilience physique — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__10_dp" name="scoutfr_phys__10_dp" placeholder="Development priority" data-label="Résilience physique — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__10_1"><input type="radio" id="scoutfr_phys__10_1" name="scoutfr_phys__10_rating" value="1" data-label="Résilience physique — note"><span>1</span></label><label class="star" for="scoutfr_phys__10_2"><input type="radio" id="scoutfr_phys__10_2" name="scoutfr_phys__10_rating" value="2" data-label="Résilience physique — note"><span>2</span></label><label class="star" for="scoutfr_phys__10_3"><input type="radio" id="scoutfr_phys__10_3" name="scoutfr_phys__10_rating" value="3" data-label="Résilience physique — note"><span>3</span></label><label class="star" for="scoutfr_phys__10_4"><input type="radio" id="scoutfr_phys__10_4" name="scoutfr_phys__10_rating" value="4" data-label="Résilience physique — note"><span>4</span></label><label class="star" for="scoutfr_phys__10_5"><input type="radio" id="scoutfr_phys__10_5" name="scoutfr_phys__10_rating" value="5" data-label="Résilience physique — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__10_ev" name="scoutfr_phys__10_ev" placeholder="Preuve / observation" data-label="Résilience physique — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__10_dp" name="scoutfr_phys__10_dp" placeholder="Priorité de développement" data-label="Résilience physique — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Projection physique</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_phys__11_1"><input type="radio" id="scoutfr_phys__11_1" name="scoutfr_phys__11_rating" value="1" data-label="Projection physique — rating"><span>1</span></label><label class="star" for="scoutfr_phys__11_2"><input type="radio" id="scoutfr_phys__11_2" name="scoutfr_phys__11_rating" value="2" data-label="Projection physique — rating"><span>2</span></label><label class="star" for="scoutfr_phys__11_3"><input type="radio" id="scoutfr_phys__11_3" name="scoutfr_phys__11_rating" value="3" data-label="Projection physique — rating"><span>3</span></label><label class="star" for="scoutfr_phys__11_4"><input type="radio" id="scoutfr_phys__11_4" name="scoutfr_phys__11_rating" value="4" data-label="Projection physique — rating"><span>4</span></label><label class="star" for="scoutfr_phys__11_5"><input type="radio" id="scoutfr_phys__11_5" name="scoutfr_phys__11_rating" value="5" data-label="Projection physique — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_phys__11_ev" name="scoutfr_phys__11_ev" placeholder="Evidence / observation" data-label="Projection physique — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_phys__11_dp" name="scoutfr_phys__11_dp" placeholder="Development priority" data-label="Projection physique — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_phys__11_1"><input type="radio" id="scoutfr_phys__11_1" name="scoutfr_phys__11_rating" value="1" data-label="Projection physique — note"><span>1</span></label><label class="star" for="scoutfr_phys__11_2"><input type="radio" id="scoutfr_phys__11_2" name="scoutfr_phys__11_rating" value="2" data-label="Projection physique — note"><span>2</span></label><label class="star" for="scoutfr_phys__11_3"><input type="radio" id="scoutfr_phys__11_3" name="scoutfr_phys__11_rating" value="3" data-label="Projection physique — note"><span>3</span></label><label class="star" for="scoutfr_phys__11_4"><input type="radio" id="scoutfr_phys__11_4" name="scoutfr_phys__11_rating" value="4" data-label="Projection physique — note"><span>4</span></label><label class="star" for="scoutfr_phys__11_5"><input type="radio" id="scoutfr_phys__11_5" name="scoutfr_phys__11_rating" value="5" data-label="Projection physique — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_phys__11_ev" name="scoutfr_phys__11_ev" placeholder="Preuve / observation" data-label="Projection physique — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_phys__11_dp" name="scoutfr_phys__11_dp" placeholder="Priorité de développement" data-label="Projection physique — Priorité de développement">
 </div>
 </div>
 <div class="field">
@@ -1054,10 +1061,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_m_trique">
   <span class="qlabel">Métrique</span>
   <div class="cards" id="scoutfr_m_trique_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_m_trique')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_m_trique')">+ Ajouter une entrée</button>
   <template id="scoutfr_m_trique_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Métrique</label><input type="text" name="scoutfr_m_trique_m_trique[]" data-label="Métrique — Métrique"></div>
     <div class="field"><label>Résultat</label><input type="text" name="scoutfr_m_trique_r_sultat[]" data-label="Métrique — Résultat"></div>
     <div class="field"><label>Unité / bande de vitesse / définition</label><input type="text" name="scoutfr_m_trique_unit_bande_de_vitesse_d_finition[]" data-label="Métrique — Unité / bande de vitesse / définition"></div>
@@ -1081,79 +1088,79 @@ textarea{resize:vertical;}
     
 <div class="rate-block">
   
-  <p class="hint">Rate 1–5 (1 = major development need, 3 = competitive, 5 = outstanding). Add an evidence note or development priority where it matters.</p>
+  <p class="hint">Notez de 1 à 5 (1 = besoin de développement majeur, 3 = compétitif, 5 = exceptionnel). Ajoutez une note de preuve ou une priorité de développement lorsque c’est pertinent.</p>
   
 <div class="rate-row">
   <div class="rate-attr">Capacité à être coaché</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__0_1"><input type="radio" id="scoutfr_psych__0_1" name="scoutfr_psych__0_rating" value="1" data-label="Capacité à être coaché — rating"><span>1</span></label><label class="star" for="scoutfr_psych__0_2"><input type="radio" id="scoutfr_psych__0_2" name="scoutfr_psych__0_rating" value="2" data-label="Capacité à être coaché — rating"><span>2</span></label><label class="star" for="scoutfr_psych__0_3"><input type="radio" id="scoutfr_psych__0_3" name="scoutfr_psych__0_rating" value="3" data-label="Capacité à être coaché — rating"><span>3</span></label><label class="star" for="scoutfr_psych__0_4"><input type="radio" id="scoutfr_psych__0_4" name="scoutfr_psych__0_rating" value="4" data-label="Capacité à être coaché — rating"><span>4</span></label><label class="star" for="scoutfr_psych__0_5"><input type="radio" id="scoutfr_psych__0_5" name="scoutfr_psych__0_rating" value="5" data-label="Capacité à être coaché — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__0_ev" name="scoutfr_psych__0_ev" placeholder="Evidence / observation" data-label="Capacité à être coaché — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__0_dp" name="scoutfr_psych__0_dp" placeholder="Development priority" data-label="Capacité à être coaché — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__0_1"><input type="radio" id="scoutfr_psych__0_1" name="scoutfr_psych__0_rating" value="1" data-label="Capacité à être coaché — note"><span>1</span></label><label class="star" for="scoutfr_psych__0_2"><input type="radio" id="scoutfr_psych__0_2" name="scoutfr_psych__0_rating" value="2" data-label="Capacité à être coaché — note"><span>2</span></label><label class="star" for="scoutfr_psych__0_3"><input type="radio" id="scoutfr_psych__0_3" name="scoutfr_psych__0_rating" value="3" data-label="Capacité à être coaché — note"><span>3</span></label><label class="star" for="scoutfr_psych__0_4"><input type="radio" id="scoutfr_psych__0_4" name="scoutfr_psych__0_rating" value="4" data-label="Capacité à être coaché — note"><span>4</span></label><label class="star" for="scoutfr_psych__0_5"><input type="radio" id="scoutfr_psych__0_5" name="scoutfr_psych__0_rating" value="5" data-label="Capacité à être coaché — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__0_ev" name="scoutfr_psych__0_ev" placeholder="Preuve / observation" data-label="Capacité à être coaché — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__0_dp" name="scoutfr_psych__0_dp" placeholder="Priorité de développement" data-label="Capacité à être coaché — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Vitesse d'apprentissage</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__1_1"><input type="radio" id="scoutfr_psych__1_1" name="scoutfr_psych__1_rating" value="1" data-label="Vitesse d'apprentissage — rating"><span>1</span></label><label class="star" for="scoutfr_psych__1_2"><input type="radio" id="scoutfr_psych__1_2" name="scoutfr_psych__1_rating" value="2" data-label="Vitesse d'apprentissage — rating"><span>2</span></label><label class="star" for="scoutfr_psych__1_3"><input type="radio" id="scoutfr_psych__1_3" name="scoutfr_psych__1_rating" value="3" data-label="Vitesse d'apprentissage — rating"><span>3</span></label><label class="star" for="scoutfr_psych__1_4"><input type="radio" id="scoutfr_psych__1_4" name="scoutfr_psych__1_rating" value="4" data-label="Vitesse d'apprentissage — rating"><span>4</span></label><label class="star" for="scoutfr_psych__1_5"><input type="radio" id="scoutfr_psych__1_5" name="scoutfr_psych__1_rating" value="5" data-label="Vitesse d'apprentissage — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__1_ev" name="scoutfr_psych__1_ev" placeholder="Evidence / observation" data-label="Vitesse d'apprentissage — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__1_dp" name="scoutfr_psych__1_dp" placeholder="Development priority" data-label="Vitesse d'apprentissage — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__1_1"><input type="radio" id="scoutfr_psych__1_1" name="scoutfr_psych__1_rating" value="1" data-label="Vitesse d'apprentissage — note"><span>1</span></label><label class="star" for="scoutfr_psych__1_2"><input type="radio" id="scoutfr_psych__1_2" name="scoutfr_psych__1_rating" value="2" data-label="Vitesse d'apprentissage — note"><span>2</span></label><label class="star" for="scoutfr_psych__1_3"><input type="radio" id="scoutfr_psych__1_3" name="scoutfr_psych__1_rating" value="3" data-label="Vitesse d'apprentissage — note"><span>3</span></label><label class="star" for="scoutfr_psych__1_4"><input type="radio" id="scoutfr_psych__1_4" name="scoutfr_psych__1_rating" value="4" data-label="Vitesse d'apprentissage — note"><span>4</span></label><label class="star" for="scoutfr_psych__1_5"><input type="radio" id="scoutfr_psych__1_5" name="scoutfr_psych__1_rating" value="5" data-label="Vitesse d'apprentissage — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__1_ev" name="scoutfr_psych__1_ev" placeholder="Preuve / observation" data-label="Vitesse d'apprentissage — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__1_dp" name="scoutfr_psych__1_dp" placeholder="Priorité de développement" data-label="Vitesse d'apprentissage — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Mentalité compétitive</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__2_1"><input type="radio" id="scoutfr_psych__2_1" name="scoutfr_psych__2_rating" value="1" data-label="Mentalité compétitive — rating"><span>1</span></label><label class="star" for="scoutfr_psych__2_2"><input type="radio" id="scoutfr_psych__2_2" name="scoutfr_psych__2_rating" value="2" data-label="Mentalité compétitive — rating"><span>2</span></label><label class="star" for="scoutfr_psych__2_3"><input type="radio" id="scoutfr_psych__2_3" name="scoutfr_psych__2_rating" value="3" data-label="Mentalité compétitive — rating"><span>3</span></label><label class="star" for="scoutfr_psych__2_4"><input type="radio" id="scoutfr_psych__2_4" name="scoutfr_psych__2_rating" value="4" data-label="Mentalité compétitive — rating"><span>4</span></label><label class="star" for="scoutfr_psych__2_5"><input type="radio" id="scoutfr_psych__2_5" name="scoutfr_psych__2_rating" value="5" data-label="Mentalité compétitive — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__2_ev" name="scoutfr_psych__2_ev" placeholder="Evidence / observation" data-label="Mentalité compétitive — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__2_dp" name="scoutfr_psych__2_dp" placeholder="Development priority" data-label="Mentalité compétitive — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__2_1"><input type="radio" id="scoutfr_psych__2_1" name="scoutfr_psych__2_rating" value="1" data-label="Mentalité compétitive — note"><span>1</span></label><label class="star" for="scoutfr_psych__2_2"><input type="radio" id="scoutfr_psych__2_2" name="scoutfr_psych__2_rating" value="2" data-label="Mentalité compétitive — note"><span>2</span></label><label class="star" for="scoutfr_psych__2_3"><input type="radio" id="scoutfr_psych__2_3" name="scoutfr_psych__2_rating" value="3" data-label="Mentalité compétitive — note"><span>3</span></label><label class="star" for="scoutfr_psych__2_4"><input type="radio" id="scoutfr_psych__2_4" name="scoutfr_psych__2_rating" value="4" data-label="Mentalité compétitive — note"><span>4</span></label><label class="star" for="scoutfr_psych__2_5"><input type="radio" id="scoutfr_psych__2_5" name="scoutfr_psych__2_rating" value="5" data-label="Mentalité compétitive — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__2_ev" name="scoutfr_psych__2_ev" placeholder="Preuve / observation" data-label="Mentalité compétitive — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__2_dp" name="scoutfr_psych__2_dp" placeholder="Priorité de développement" data-label="Mentalité compétitive — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Résilience</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__3_1"><input type="radio" id="scoutfr_psych__3_1" name="scoutfr_psych__3_rating" value="1" data-label="Résilience — rating"><span>1</span></label><label class="star" for="scoutfr_psych__3_2"><input type="radio" id="scoutfr_psych__3_2" name="scoutfr_psych__3_rating" value="2" data-label="Résilience — rating"><span>2</span></label><label class="star" for="scoutfr_psych__3_3"><input type="radio" id="scoutfr_psych__3_3" name="scoutfr_psych__3_rating" value="3" data-label="Résilience — rating"><span>3</span></label><label class="star" for="scoutfr_psych__3_4"><input type="radio" id="scoutfr_psych__3_4" name="scoutfr_psych__3_rating" value="4" data-label="Résilience — rating"><span>4</span></label><label class="star" for="scoutfr_psych__3_5"><input type="radio" id="scoutfr_psych__3_5" name="scoutfr_psych__3_rating" value="5" data-label="Résilience — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__3_ev" name="scoutfr_psych__3_ev" placeholder="Evidence / observation" data-label="Résilience — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__3_dp" name="scoutfr_psych__3_dp" placeholder="Development priority" data-label="Résilience — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__3_1"><input type="radio" id="scoutfr_psych__3_1" name="scoutfr_psych__3_rating" value="1" data-label="Résilience — note"><span>1</span></label><label class="star" for="scoutfr_psych__3_2"><input type="radio" id="scoutfr_psych__3_2" name="scoutfr_psych__3_rating" value="2" data-label="Résilience — note"><span>2</span></label><label class="star" for="scoutfr_psych__3_3"><input type="radio" id="scoutfr_psych__3_3" name="scoutfr_psych__3_rating" value="3" data-label="Résilience — note"><span>3</span></label><label class="star" for="scoutfr_psych__3_4"><input type="radio" id="scoutfr_psych__3_4" name="scoutfr_psych__3_rating" value="4" data-label="Résilience — note"><span>4</span></label><label class="star" for="scoutfr_psych__3_5"><input type="radio" id="scoutfr_psych__3_5" name="scoutfr_psych__3_rating" value="5" data-label="Résilience — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__3_ev" name="scoutfr_psych__3_ev" placeholder="Preuve / observation" data-label="Résilience — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__3_dp" name="scoutfr_psych__3_dp" placeholder="Priorité de développement" data-label="Résilience — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Contrôle émotionnel</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__4_1"><input type="radio" id="scoutfr_psych__4_1" name="scoutfr_psych__4_rating" value="1" data-label="Contrôle émotionnel — rating"><span>1</span></label><label class="star" for="scoutfr_psych__4_2"><input type="radio" id="scoutfr_psych__4_2" name="scoutfr_psych__4_rating" value="2" data-label="Contrôle émotionnel — rating"><span>2</span></label><label class="star" for="scoutfr_psych__4_3"><input type="radio" id="scoutfr_psych__4_3" name="scoutfr_psych__4_rating" value="3" data-label="Contrôle émotionnel — rating"><span>3</span></label><label class="star" for="scoutfr_psych__4_4"><input type="radio" id="scoutfr_psych__4_4" name="scoutfr_psych__4_rating" value="4" data-label="Contrôle émotionnel — rating"><span>4</span></label><label class="star" for="scoutfr_psych__4_5"><input type="radio" id="scoutfr_psych__4_5" name="scoutfr_psych__4_rating" value="5" data-label="Contrôle émotionnel — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__4_ev" name="scoutfr_psych__4_ev" placeholder="Evidence / observation" data-label="Contrôle émotionnel — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__4_dp" name="scoutfr_psych__4_dp" placeholder="Development priority" data-label="Contrôle émotionnel — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__4_1"><input type="radio" id="scoutfr_psych__4_1" name="scoutfr_psych__4_rating" value="1" data-label="Contrôle émotionnel — note"><span>1</span></label><label class="star" for="scoutfr_psych__4_2"><input type="radio" id="scoutfr_psych__4_2" name="scoutfr_psych__4_rating" value="2" data-label="Contrôle émotionnel — note"><span>2</span></label><label class="star" for="scoutfr_psych__4_3"><input type="radio" id="scoutfr_psych__4_3" name="scoutfr_psych__4_rating" value="3" data-label="Contrôle émotionnel — note"><span>3</span></label><label class="star" for="scoutfr_psych__4_4"><input type="radio" id="scoutfr_psych__4_4" name="scoutfr_psych__4_rating" value="4" data-label="Contrôle émotionnel — note"><span>4</span></label><label class="star" for="scoutfr_psych__4_5"><input type="radio" id="scoutfr_psych__4_5" name="scoutfr_psych__4_rating" value="5" data-label="Contrôle émotionnel — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__4_ev" name="scoutfr_psych__4_ev" placeholder="Preuve / observation" data-label="Contrôle émotionnel — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__4_dp" name="scoutfr_psych__4_dp" placeholder="Priorité de développement" data-label="Contrôle émotionnel — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Communication</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__5_1"><input type="radio" id="scoutfr_psych__5_1" name="scoutfr_psych__5_rating" value="1" data-label="Communication — rating"><span>1</span></label><label class="star" for="scoutfr_psych__5_2"><input type="radio" id="scoutfr_psych__5_2" name="scoutfr_psych__5_rating" value="2" data-label="Communication — rating"><span>2</span></label><label class="star" for="scoutfr_psych__5_3"><input type="radio" id="scoutfr_psych__5_3" name="scoutfr_psych__5_rating" value="3" data-label="Communication — rating"><span>3</span></label><label class="star" for="scoutfr_psych__5_4"><input type="radio" id="scoutfr_psych__5_4" name="scoutfr_psych__5_rating" value="4" data-label="Communication — rating"><span>4</span></label><label class="star" for="scoutfr_psych__5_5"><input type="radio" id="scoutfr_psych__5_5" name="scoutfr_psych__5_rating" value="5" data-label="Communication — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__5_ev" name="scoutfr_psych__5_ev" placeholder="Evidence / observation" data-label="Communication — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__5_dp" name="scoutfr_psych__5_dp" placeholder="Development priority" data-label="Communication — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__5_1"><input type="radio" id="scoutfr_psych__5_1" name="scoutfr_psych__5_rating" value="1" data-label="Communication — note"><span>1</span></label><label class="star" for="scoutfr_psych__5_2"><input type="radio" id="scoutfr_psych__5_2" name="scoutfr_psych__5_rating" value="2" data-label="Communication — note"><span>2</span></label><label class="star" for="scoutfr_psych__5_3"><input type="radio" id="scoutfr_psych__5_3" name="scoutfr_psych__5_rating" value="3" data-label="Communication — note"><span>3</span></label><label class="star" for="scoutfr_psych__5_4"><input type="radio" id="scoutfr_psych__5_4" name="scoutfr_psych__5_rating" value="4" data-label="Communication — note"><span>4</span></label><label class="star" for="scoutfr_psych__5_5"><input type="radio" id="scoutfr_psych__5_5" name="scoutfr_psych__5_rating" value="5" data-label="Communication — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__5_ev" name="scoutfr_psych__5_ev" placeholder="Preuve / observation" data-label="Communication — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__5_dp" name="scoutfr_psych__5_dp" placeholder="Priorité de développement" data-label="Communication — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Leadership</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__6_1"><input type="radio" id="scoutfr_psych__6_1" name="scoutfr_psych__6_rating" value="1" data-label="Leadership — rating"><span>1</span></label><label class="star" for="scoutfr_psych__6_2"><input type="radio" id="scoutfr_psych__6_2" name="scoutfr_psych__6_rating" value="2" data-label="Leadership — rating"><span>2</span></label><label class="star" for="scoutfr_psych__6_3"><input type="radio" id="scoutfr_psych__6_3" name="scoutfr_psych__6_rating" value="3" data-label="Leadership — rating"><span>3</span></label><label class="star" for="scoutfr_psych__6_4"><input type="radio" id="scoutfr_psych__6_4" name="scoutfr_psych__6_rating" value="4" data-label="Leadership — rating"><span>4</span></label><label class="star" for="scoutfr_psych__6_5"><input type="radio" id="scoutfr_psych__6_5" name="scoutfr_psych__6_rating" value="5" data-label="Leadership — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__6_ev" name="scoutfr_psych__6_ev" placeholder="Evidence / observation" data-label="Leadership — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__6_dp" name="scoutfr_psych__6_dp" placeholder="Development priority" data-label="Leadership — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__6_1"><input type="radio" id="scoutfr_psych__6_1" name="scoutfr_psych__6_rating" value="1" data-label="Leadership — note"><span>1</span></label><label class="star" for="scoutfr_psych__6_2"><input type="radio" id="scoutfr_psych__6_2" name="scoutfr_psych__6_rating" value="2" data-label="Leadership — note"><span>2</span></label><label class="star" for="scoutfr_psych__6_3"><input type="radio" id="scoutfr_psych__6_3" name="scoutfr_psych__6_rating" value="3" data-label="Leadership — note"><span>3</span></label><label class="star" for="scoutfr_psych__6_4"><input type="radio" id="scoutfr_psych__6_4" name="scoutfr_psych__6_rating" value="4" data-label="Leadership — note"><span>4</span></label><label class="star" for="scoutfr_psych__6_5"><input type="radio" id="scoutfr_psych__6_5" name="scoutfr_psych__6_rating" value="5" data-label="Leadership — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__6_ev" name="scoutfr_psych__6_ev" placeholder="Preuve / observation" data-label="Leadership — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__6_dp" name="scoutfr_psych__6_dp" placeholder="Priorité de développement" data-label="Leadership — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Discipline</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__7_1"><input type="radio" id="scoutfr_psych__7_1" name="scoutfr_psych__7_rating" value="1" data-label="Discipline — rating"><span>1</span></label><label class="star" for="scoutfr_psych__7_2"><input type="radio" id="scoutfr_psych__7_2" name="scoutfr_psych__7_rating" value="2" data-label="Discipline — rating"><span>2</span></label><label class="star" for="scoutfr_psych__7_3"><input type="radio" id="scoutfr_psych__7_3" name="scoutfr_psych__7_rating" value="3" data-label="Discipline — rating"><span>3</span></label><label class="star" for="scoutfr_psych__7_4"><input type="radio" id="scoutfr_psych__7_4" name="scoutfr_psych__7_rating" value="4" data-label="Discipline — rating"><span>4</span></label><label class="star" for="scoutfr_psych__7_5"><input type="radio" id="scoutfr_psych__7_5" name="scoutfr_psych__7_rating" value="5" data-label="Discipline — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__7_ev" name="scoutfr_psych__7_ev" placeholder="Evidence / observation" data-label="Discipline — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__7_dp" name="scoutfr_psych__7_dp" placeholder="Development priority" data-label="Discipline — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__7_1"><input type="radio" id="scoutfr_psych__7_1" name="scoutfr_psych__7_rating" value="1" data-label="Discipline — note"><span>1</span></label><label class="star" for="scoutfr_psych__7_2"><input type="radio" id="scoutfr_psych__7_2" name="scoutfr_psych__7_rating" value="2" data-label="Discipline — note"><span>2</span></label><label class="star" for="scoutfr_psych__7_3"><input type="radio" id="scoutfr_psych__7_3" name="scoutfr_psych__7_rating" value="3" data-label="Discipline — note"><span>3</span></label><label class="star" for="scoutfr_psych__7_4"><input type="radio" id="scoutfr_psych__7_4" name="scoutfr_psych__7_rating" value="4" data-label="Discipline — note"><span>4</span></label><label class="star" for="scoutfr_psych__7_5"><input type="radio" id="scoutfr_psych__7_5" name="scoutfr_psych__7_rating" value="5" data-label="Discipline — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__7_ev" name="scoutfr_psych__7_ev" placeholder="Preuve / observation" data-label="Discipline — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__7_dp" name="scoutfr_psych__7_dp" placeholder="Priorité de développement" data-label="Discipline — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Habitudes professionnelles</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__8_1"><input type="radio" id="scoutfr_psych__8_1" name="scoutfr_psych__8_rating" value="1" data-label="Habitudes professionnelles — rating"><span>1</span></label><label class="star" for="scoutfr_psych__8_2"><input type="radio" id="scoutfr_psych__8_2" name="scoutfr_psych__8_rating" value="2" data-label="Habitudes professionnelles — rating"><span>2</span></label><label class="star" for="scoutfr_psych__8_3"><input type="radio" id="scoutfr_psych__8_3" name="scoutfr_psych__8_rating" value="3" data-label="Habitudes professionnelles — rating"><span>3</span></label><label class="star" for="scoutfr_psych__8_4"><input type="radio" id="scoutfr_psych__8_4" name="scoutfr_psych__8_rating" value="4" data-label="Habitudes professionnelles — rating"><span>4</span></label><label class="star" for="scoutfr_psych__8_5"><input type="radio" id="scoutfr_psych__8_5" name="scoutfr_psych__8_rating" value="5" data-label="Habitudes professionnelles — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__8_ev" name="scoutfr_psych__8_ev" placeholder="Evidence / observation" data-label="Habitudes professionnelles — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__8_dp" name="scoutfr_psych__8_dp" placeholder="Development priority" data-label="Habitudes professionnelles — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__8_1"><input type="radio" id="scoutfr_psych__8_1" name="scoutfr_psych__8_rating" value="1" data-label="Habitudes professionnelles — note"><span>1</span></label><label class="star" for="scoutfr_psych__8_2"><input type="radio" id="scoutfr_psych__8_2" name="scoutfr_psych__8_rating" value="2" data-label="Habitudes professionnelles — note"><span>2</span></label><label class="star" for="scoutfr_psych__8_3"><input type="radio" id="scoutfr_psych__8_3" name="scoutfr_psych__8_rating" value="3" data-label="Habitudes professionnelles — note"><span>3</span></label><label class="star" for="scoutfr_psych__8_4"><input type="radio" id="scoutfr_psych__8_4" name="scoutfr_psych__8_rating" value="4" data-label="Habitudes professionnelles — note"><span>4</span></label><label class="star" for="scoutfr_psych__8_5"><input type="radio" id="scoutfr_psych__8_5" name="scoutfr_psych__8_rating" value="5" data-label="Habitudes professionnelles — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__8_ev" name="scoutfr_psych__8_ev" placeholder="Preuve / observation" data-label="Habitudes professionnelles — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__8_dp" name="scoutfr_psych__8_dp" placeholder="Priorité de développement" data-label="Habitudes professionnelles — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Adaptabilité culturelle</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__9_1"><input type="radio" id="scoutfr_psych__9_1" name="scoutfr_psych__9_rating" value="1" data-label="Adaptabilité culturelle — rating"><span>1</span></label><label class="star" for="scoutfr_psych__9_2"><input type="radio" id="scoutfr_psych__9_2" name="scoutfr_psych__9_rating" value="2" data-label="Adaptabilité culturelle — rating"><span>2</span></label><label class="star" for="scoutfr_psych__9_3"><input type="radio" id="scoutfr_psych__9_3" name="scoutfr_psych__9_rating" value="3" data-label="Adaptabilité culturelle — rating"><span>3</span></label><label class="star" for="scoutfr_psych__9_4"><input type="radio" id="scoutfr_psych__9_4" name="scoutfr_psych__9_rating" value="4" data-label="Adaptabilité culturelle — rating"><span>4</span></label><label class="star" for="scoutfr_psych__9_5"><input type="radio" id="scoutfr_psych__9_5" name="scoutfr_psych__9_rating" value="5" data-label="Adaptabilité culturelle — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__9_ev" name="scoutfr_psych__9_ev" placeholder="Evidence / observation" data-label="Adaptabilité culturelle — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__9_dp" name="scoutfr_psych__9_dp" placeholder="Development priority" data-label="Adaptabilité culturelle — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__9_1"><input type="radio" id="scoutfr_psych__9_1" name="scoutfr_psych__9_rating" value="1" data-label="Adaptabilité culturelle — note"><span>1</span></label><label class="star" for="scoutfr_psych__9_2"><input type="radio" id="scoutfr_psych__9_2" name="scoutfr_psych__9_rating" value="2" data-label="Adaptabilité culturelle — note"><span>2</span></label><label class="star" for="scoutfr_psych__9_3"><input type="radio" id="scoutfr_psych__9_3" name="scoutfr_psych__9_rating" value="3" data-label="Adaptabilité culturelle — note"><span>3</span></label><label class="star" for="scoutfr_psych__9_4"><input type="radio" id="scoutfr_psych__9_4" name="scoutfr_psych__9_rating" value="4" data-label="Adaptabilité culturelle — note"><span>4</span></label><label class="star" for="scoutfr_psych__9_5"><input type="radio" id="scoutfr_psych__9_5" name="scoutfr_psych__9_rating" value="5" data-label="Adaptabilité culturelle — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__9_ev" name="scoutfr_psych__9_ev" placeholder="Preuve / observation" data-label="Adaptabilité culturelle — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__9_dp" name="scoutfr_psych__9_dp" placeholder="Priorité de développement" data-label="Adaptabilité culturelle — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Adaptabilité linguistique</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__10_1"><input type="radio" id="scoutfr_psych__10_1" name="scoutfr_psych__10_rating" value="1" data-label="Adaptabilité linguistique — rating"><span>1</span></label><label class="star" for="scoutfr_psych__10_2"><input type="radio" id="scoutfr_psych__10_2" name="scoutfr_psych__10_rating" value="2" data-label="Adaptabilité linguistique — rating"><span>2</span></label><label class="star" for="scoutfr_psych__10_3"><input type="radio" id="scoutfr_psych__10_3" name="scoutfr_psych__10_rating" value="3" data-label="Adaptabilité linguistique — rating"><span>3</span></label><label class="star" for="scoutfr_psych__10_4"><input type="radio" id="scoutfr_psych__10_4" name="scoutfr_psych__10_rating" value="4" data-label="Adaptabilité linguistique — rating"><span>4</span></label><label class="star" for="scoutfr_psych__10_5"><input type="radio" id="scoutfr_psych__10_5" name="scoutfr_psych__10_rating" value="5" data-label="Adaptabilité linguistique — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__10_ev" name="scoutfr_psych__10_ev" placeholder="Evidence / observation" data-label="Adaptabilité linguistique — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__10_dp" name="scoutfr_psych__10_dp" placeholder="Development priority" data-label="Adaptabilité linguistique — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__10_1"><input type="radio" id="scoutfr_psych__10_1" name="scoutfr_psych__10_rating" value="1" data-label="Adaptabilité linguistique — note"><span>1</span></label><label class="star" for="scoutfr_psych__10_2"><input type="radio" id="scoutfr_psych__10_2" name="scoutfr_psych__10_rating" value="2" data-label="Adaptabilité linguistique — note"><span>2</span></label><label class="star" for="scoutfr_psych__10_3"><input type="radio" id="scoutfr_psych__10_3" name="scoutfr_psych__10_rating" value="3" data-label="Adaptabilité linguistique — note"><span>3</span></label><label class="star" for="scoutfr_psych__10_4"><input type="radio" id="scoutfr_psych__10_4" name="scoutfr_psych__10_rating" value="4" data-label="Adaptabilité linguistique — note"><span>4</span></label><label class="star" for="scoutfr_psych__10_5"><input type="radio" id="scoutfr_psych__10_5" name="scoutfr_psych__10_rating" value="5" data-label="Adaptabilité linguistique — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__10_ev" name="scoutfr_psych__10_ev" placeholder="Preuve / observation" data-label="Adaptabilité linguistique — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__10_dp" name="scoutfr_psych__10_dp" placeholder="Priorité de développement" data-label="Adaptabilité linguistique — Priorité de développement">
 </div>
 <div class="rate-row">
   <div class="rate-attr">Indépendance en cas de relocalisation</div>
-  <div class="rate-stars"><label class="star" for="scoutfr_psych__11_1"><input type="radio" id="scoutfr_psych__11_1" name="scoutfr_psych__11_rating" value="1" data-label="Indépendance en cas de relocalisation — rating"><span>1</span></label><label class="star" for="scoutfr_psych__11_2"><input type="radio" id="scoutfr_psych__11_2" name="scoutfr_psych__11_rating" value="2" data-label="Indépendance en cas de relocalisation — rating"><span>2</span></label><label class="star" for="scoutfr_psych__11_3"><input type="radio" id="scoutfr_psych__11_3" name="scoutfr_psych__11_rating" value="3" data-label="Indépendance en cas de relocalisation — rating"><span>3</span></label><label class="star" for="scoutfr_psych__11_4"><input type="radio" id="scoutfr_psych__11_4" name="scoutfr_psych__11_rating" value="4" data-label="Indépendance en cas de relocalisation — rating"><span>4</span></label><label class="star" for="scoutfr_psych__11_5"><input type="radio" id="scoutfr_psych__11_5" name="scoutfr_psych__11_rating" value="5" data-label="Indépendance en cas de relocalisation — rating"><span>5</span></label></div>
-  <input type="text" class="rate-ev" id="scoutfr_psych__11_ev" name="scoutfr_psych__11_ev" placeholder="Evidence / observation" data-label="Indépendance en cas de relocalisation — evidence">
-  <input type="text" class="rate-dp" id="scoutfr_psych__11_dp" name="scoutfr_psych__11_dp" placeholder="Development priority" data-label="Indépendance en cas de relocalisation — development priority">
+  <div class="rate-stars"><label class="star" for="scoutfr_psych__11_1"><input type="radio" id="scoutfr_psych__11_1" name="scoutfr_psych__11_rating" value="1" data-label="Indépendance en cas de relocalisation — note"><span>1</span></label><label class="star" for="scoutfr_psych__11_2"><input type="radio" id="scoutfr_psych__11_2" name="scoutfr_psych__11_rating" value="2" data-label="Indépendance en cas de relocalisation — note"><span>2</span></label><label class="star" for="scoutfr_psych__11_3"><input type="radio" id="scoutfr_psych__11_3" name="scoutfr_psych__11_rating" value="3" data-label="Indépendance en cas de relocalisation — note"><span>3</span></label><label class="star" for="scoutfr_psych__11_4"><input type="radio" id="scoutfr_psych__11_4" name="scoutfr_psych__11_rating" value="4" data-label="Indépendance en cas de relocalisation — note"><span>4</span></label><label class="star" for="scoutfr_psych__11_5"><input type="radio" id="scoutfr_psych__11_5" name="scoutfr_psych__11_rating" value="5" data-label="Indépendance en cas de relocalisation — note"><span>5</span></label></div>
+  <input type="text" class="rate-ev" id="scoutfr_psych__11_ev" name="scoutfr_psych__11_ev" placeholder="Preuve / observation" data-label="Indépendance en cas de relocalisation — Preuve / observation">
+  <input type="text" class="rate-dp" id="scoutfr_psych__11_dp" name="scoutfr_psych__11_dp" placeholder="Priorité de développement" data-label="Indépendance en cas de relocalisation — Priorité de développement">
 </div>
 </div>
 <div class="field">
@@ -1232,37 +1239,38 @@ textarea{resize:vertical;}
 <details class="section">
   <summary><span class="sec-num">13</span><span class="sec-title">Évaluation de marché, valorisation et finances</span><span class="chev">▾</span></summary>
   <div class="sec-body">
+    <p class="note">Les champs financiers sont masqués automatiquement lorsque la date de naissance indique que le joueur a moins de 18 ans.</p>
     
     
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_valeur_publique_transfermarkt">Valeur publique / Transfermarkt</label>
   <input type="text" id="scoutfr_valeur_publique_transfermarkt" name="scoutfr_valeur_publique_transfermarkt" data-label="Valeur publique / Transfermarkt" placeholder="Devise et montant">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_co_t_contractuel_estim">Coût contractuel estimé</label>
   <input type="text" id="scoutfr_co_t_contractuel_estim" name="scoutfr_co_t_contractuel_estim" data-label="Coût contractuel estimé">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_attente_salariale_indemnit">Attente salariale / indemnité</label>
   <input type="text" id="scoutfr_attente_salariale_indemnit" name="scoutfr_attente_salariale_indemnit" data-label="Attente salariale / indemnité">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_frais_d_agent_interm_diaire_le_cas_ch_ant_dans_la_l_galit">Frais d'agent / intermédiaire (le cas échéant, dans la légalité)</label>
   <input type="text" id="scoutfr_frais_d_agent_interm_diaire_le_cas_ch_ant_dans_la_l_galit" name="scoutfr_frais_d_agent_interm_diaire_le_cas_ch_ant_dans_la_l_galit" data-label="Frais d'agent / intermédiaire (le cas échéant, dans la légalité)">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_indemnit_de_formation_exposition_la_solidarit">Indemnité de formation / exposition à la solidarité</label>
   <input type="text" id="scoutfr_indemnit_de_formation_exposition_la_solidarit" name="scoutfr_indemnit_de_formation_exposition_la_solidarit" data-label="Indemnité de formation / exposition à la solidarité">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_co_ts_de_visa_relocalisation_et_inscription">Coûts de visa, relocalisation et inscription</label>
   <input type="text" id="scoutfr_co_ts_de_visa_relocalisation_et_inscription" name="scoutfr_co_ts_de_visa_relocalisation_et_inscription" data-label="Coûts de visa, relocalisation et inscription">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_co_t_total_estim_d_acquisition_placement">Coût total estimé d'acquisition / placement</label>
   <input type="text" id="scoutfr_co_t_total_estim_d_acquisition_placement" name="scoutfr_co_t_total_estim_d_acquisition_placement" data-label="Coût total estimé d'acquisition / placement">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="scoutfr_valeur_de_revente_de_fili_re_future_estim_e">Valeur de revente / de filière future estimée</label>
   <input type="text" id="scoutfr_valeur_de_revente_de_fili_re_future_estim_e" name="scoutfr_valeur_de_revente_de_fili_re_future_estim_e" data-label="Valeur de revente / de filière future estimée">
 </div>
@@ -1296,6 +1304,38 @@ textarea{resize:vertical;}
   </div>
 </details>
 <details class="section">
+  <summary><span class="sec-num">13A</span><span class="sec-title" id="scoutfr_dc_sec_title">Conditions de l’opération</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+    <p class="note">Pour les joueurs de moins de 18 ans, ce cadre devient « S’engager uniquement si » : n’indiquez que des conditions de développement et de protection, jamais d’indemnités ni de salaires.</p>
+<div class="field" data-money="1">
+  <label for="scoutfr_dc_fee">Plafond d’indemnité de transfert</label>
+  <input type="text" id="scoutfr_dc_fee" name="scoutfr_dc_fee" data-label="Plafond d’indemnité de transfert">
+</div>
+<div class="field" data-money="1">
+  <label for="scoutfr_dc_wage">Plafond salarial</label>
+  <input type="text" id="scoutfr_dc_wage" name="scoutfr_dc_wage" data-label="Plafond salarial">
+</div>
+<div class="field">
+  <span class="qlabel">Décision sur la place d’enregistrement</span>
+  
+  <div class="opts">
+    <label class="opt" for="scoutfr_dc_slot_0"><input type="radio" id="scoutfr_dc_slot_0" name="scoutfr_dc_slot" value="Utiliser une place maintenant" data-label="Décision sur la place d’enregistrement"><span>Utiliser une place maintenant</span></label>
+    <label class="opt" for="scoutfr_dc_slot_1"><input type="radio" id="scoutfr_dc_slot_1" name="scoutfr_dc_slot" value="Attendre le prochain mercato" data-label="Décision sur la place d’enregistrement"><span>Attendre le prochain mercato</span></label>
+    <label class="opt" for="scoutfr_dc_slot_2"><input type="radio" id="scoutfr_dc_slot_2" name="scoutfr_dc_slot" value="Aucune place requise" data-label="Décision sur la place d’enregistrement"><span>Aucune place requise</span></label>
+    <label class="opt" for="scoutfr_dc_slot_3"><input type="radio" id="scoutfr_dc_slot_3" name="scoutfr_dc_slot" value="Pas encore décidé" data-label="Décision sur la place d’enregistrement"><span>Pas encore décidé</span></label>
+  </div>
+</div>
+<div class="field">
+  <label for="scoutfr_dc_verify" id="scoutfr_dc_verify_lab">Poursuivre uniquement si — condition(s) de vérification</label>
+  <textarea id="scoutfr_dc_verify" name="scoutfr_dc_verify" rows="2" data-label="Poursuivre uniquement si — condition(s) de vérification"></textarea>
+</div>
+<div class="field">
+  <label for="scoutfr_dc_walk" id="scoutfr_dc_walk_lab">Seuil de retrait</label>
+  <textarea id="scoutfr_dc_walk" name="scoutfr_dc_walk" rows="2" data-label="Seuil de retrait"></textarea>
+</div>
+  </div>
+</details>
+<details class="section">
   <summary><span class="sec-num">14</span><span class="sec-title">Registre des risques et de la vérification</span><span class="chev">▾</span></summary>
   <div class="sec-body">
     
@@ -1303,10 +1343,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_registre_des_risques">
   <span class="qlabel">Registre des risques</span>
   <div class="cards" id="scoutfr_registre_des_risques_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_registre_des_risques')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_registre_des_risques')">+ Ajouter une entrée</button>
   <template id="scoutfr_registre_des_risques_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Domaine de risque</label><input type="text" name="scoutfr_registre_des_risques_domaine_de_risque[]" data-label="Registre des risques — Domaine de risque"></div>
     <div class="field"><label>Constat</label><input type="text" name="scoutfr_registre_des_risques_constat[]" data-label="Registre des risques — Constat"></div>
     <div class="field"><label>Probabilité</label><input type="text" name="scoutfr_registre_des_risques_probabilit[]" data-label="Registre des risques — Probabilité"></div>
@@ -1327,10 +1367,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_march_cible">
   <span class="qlabel">Marché cible</span>
   <div class="cards" id="scoutfr_march_cible_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_march_cible')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_march_cible')">+ Ajouter une entrée</button>
   <template id="scoutfr_march_cible_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Pays / championnat / type de club</label><input type="text" name="scoutfr_march_cible_pays_championnat_type_de_club[]" data-label="Marché cible — Pays / championnat / type de club"></div>
     <div class="field"><label>Éligibilité au travail</label><input type="text" name="scoutfr_march_cible_ligibilit_au_travail[]" data-label="Marché cible — Éligibilité au travail"></div>
     <div class="field"><label>Besoin de rôle</label><input type="text" name="scoutfr_march_cible_besoin_de_r_le[]" data-label="Marché cible — Besoin de rôle"></div>
@@ -1429,10 +1469,10 @@ textarea{resize:vertical;}
 <div class="repeat" id="scoutfr_plan_d_action">
   <span class="qlabel">Plan d'action</span>
   <div class="cards" id="scoutfr_plan_d_action_cards"></div>
-  <button type="button" class="add-btn" onclick="addCard('scoutfr_plan_d_action')">+ Add entry</button>
+  <button type="button" class="add-btn" onclick="addCard('scoutfr_plan_d_action')">+ Ajouter une entrée</button>
   <template id="scoutfr_plan_d_action_tpl">
     <div class="card">
-      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Remove</button>
+      <button type="button" class="rm-btn" onclick="this.closest('.card').remove()">Supprimer</button>
     <div class="field"><label>Action</label><input type="text" name="scoutfr_plan_d_action_action[]" data-label="Plan d'action — Action"></div>
     <div class="field"><label>Responsable</label><input type="text" name="scoutfr_plan_d_action_responsable[]" data-label="Plan d'action — Responsable"></div>
     <div class="field"><label>Échéance</label><input type="text" name="scoutfr_plan_d_action_ch_ance[]" data-label="Plan d'action — Échéance"></div>
@@ -1440,6 +1480,23 @@ textarea{resize:vertical;}
     <div class="field"><label>Statut</label><input type="text" name="scoutfr_plan_d_action_statut[]" data-label="Plan d'action — Statut"></div>
     </div>
   </template>
+</div>
+  </div>
+</details>
+<details class="section">
+  <summary><span class="sec-num">16A</span><span class="sec-title">Repère de réévaluation</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+<div class="field">
+  <label for="scoutfr_ra_verify" id="scoutfr_ra_verify_lab">Ce qu’il faut vérifier ensuite</label>
+  <textarea id="scoutfr_ra_verify" name="scoutfr_ra_verify" rows="2" data-label="Ce qu’il faut vérifier ensuite"></textarea>
+</div>
+<div class="field">
+  <label for="scoutfr_ra_ctx" id="scoutfr_ra_ctx_lab">Contextes de match à observer ensuite (niveau de l’adversaire, score, rôle)</label>
+  <textarea id="scoutfr_ra_ctx" name="scoutfr_ra_ctx" rows="2" data-label="Contextes de match à observer ensuite (niveau de l’adversaire, score, rôle)"></textarea>
+</div>
+<div class="field">
+  <label for="scoutfr_ra_date">Date cible de réévaluation</label>
+  <input type="date" id="scoutfr_ra_date" name="scoutfr_ra_date" data-label="Date cible de réévaluation">
 </div>
   </div>
 </details>
@@ -1485,13 +1542,13 @@ textarea{resize:vertical;}
     </div>
   </main>
   <div class="footer-actions" id="formActions">
-    <button class="btn btn-secondary" onclick="showSummary()">Review</button>
-    <button class="btn btn-primary" onclick="printSummary()">Save as PDF</button>
+    <button class="btn btn-secondary" onclick="showSummary()">Vérifier</button>
+    <button class="btn btn-primary" onclick="printSummary()">Enregistrer en PDF</button>
   </div>
   <div class="footer-actions" id="summaryActions" style="display:none">
-    <button class="btn btn-secondary" onclick="backToForm()">Back to form</button>
-    <button class="btn btn-secondary" onclick="copySummary()">Copy text</button>
-    <button class="btn btn-primary" onclick="window.print()">Save as PDF</button>
+    <button class="btn btn-secondary" onclick="backToForm()">Retour au formulaire</button>
+    <button class="btn btn-secondary" onclick="copySummary()">Copier le texte</button>
+    <button class="btn btn-primary" onclick="window.print()">Enregistrer en PDF</button>
   </div>
 </div>
 <script>
@@ -1503,7 +1560,8 @@ function addCard(id){
   updateProgress();
 }
 function updateProgress(){
-  const all = document.querySelectorAll('main input, main textarea');
+  applyMinor();
+  const all = Array.from(document.querySelectorAll('main input, main textarea')).filter(el=>!el.closest('.minor-hide'));
   let filled = 0, total = 0;
   const seen = new Set();
   all.forEach(el=>{
@@ -1517,17 +1575,58 @@ function updateProgress(){
   });
   document.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked').forEach(el=>{});
   const radioNames = new Set();
-  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>radioNames.add(el.name));
+  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>{ if(!el.closest('.minor-hide')) radioNames.add(el.name); });
   let radioFilled = 0;
   radioNames.forEach(n=>{ if(document.querySelector(`input[name="${n}"]:checked`)) radioFilled++; });
   const pct = total+radioNames.size ? Math.round(100*(filled+radioFilled)/(total+radioNames.size)) : 0;
   document.getElementById('bar').style.width = pct+'%';
-  document.getElementById('barlabel').textContent = pct + '% complete';
+  document.getElementById('barlabel').textContent = pct + ' % complété';
 }
 document.addEventListener('input', updateProgress);
 document.addEventListener('change', updateProgress);
 
+
+const AF = {"dob": "scoutfr_date_de_naissance_ge", "secTitleId": "scoutfr_dc_sec_title", "secTitle": "Conditions de l’opération", "secTitleMinor": "S’engager uniquement si", "verifyId": "scoutfr_dc_verify", "verifyNormal": "Poursuivre uniquement si — condition(s) de vérification", "verifyMinor": "S’engager uniquement si — conditions de développement et de protection", "age": "Âge", "years": "ans", "minorMsg": "Moins de 18 ans — règles de protection applicables", "na": "Non applicable (mineur)"};
+function afAge(raw){
+  const s = (raw||'').trim(); if(!s) return null;
+  const now = new Date(), cy = now.getFullYear(), cm = now.getMonth()+1, cd = now.getDate();
+  let m, y, mo, d;
+  if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))){ y=+m[1]; mo=+m[2]; d=+m[3]; }
+  else if((m = s.match(/^(\d{1,2})[\/.\-\s](\d{1,2})[\/.\-\s](\d{4})$/))){ d=+m[1]; mo=+m[2]; y=+m[3]; if(mo>12 && d<=12){ const x=d; d=mo; mo=x; } }
+  if(y){
+    if(mo<1||mo>12||d<1||d>31||y>cy||y<cy-100) return null;
+    let a = cy - y; if(cm < mo || (cm === mo && cd < d)) a--;
+    return (a>=0 && a<80) ? {age:a, exact:true} : null;
+  }
+  if((m = s.match(/^(\d{1,2})\s*(years?|yrs?|ans?|anos?|años?)?$/i))){ const a=+m[1]; return (a>=1 && a<80) ? {age:a, exact:true} : null; }
+  if((m = s.match(/\b((?:19|20)\d{2})\b/))){ const diff = cy - (+m[1]); if(diff>=0 && diff<80) return {age:diff-1, exact:false, maxAge:diff}; }
+  return null;
+}
+function afIsMinor(){
+  const el = document.getElementById(AF.dob); if(!el) return false;
+  const r = afAge(el.value); if(!r) return false;
+  return r.exact ? r.age < 18 : (r.maxAge < 18);
+}
+function applyMinor(){
+  const minor = afIsMinor();
+  document.querySelectorAll('[data-money]').forEach(d=>d.classList.toggle('minor-hide', minor));
+  const t = document.getElementById(AF.secTitleId); if(t) t.textContent = minor ? AF.secTitleMinor : AF.secTitle;
+  const lab = document.getElementById(AF.verifyId+'_lab'); if(lab) lab.textContent = minor ? AF.verifyMinor : AF.verifyNormal;
+  const ta = document.getElementById(AF.verifyId); if(ta) ta.setAttribute('data-label', minor ? AF.verifyMinor : AF.verifyNormal);
+  const b = document.getElementById('ageBadge');
+  if(b){
+    const r = afAge((document.getElementById(AF.dob)||{}).value);
+    if(!r){ b.className='age-badge'; b.textContent=''; }
+    else {
+      b.className = 'age-badge show' + (minor ? ' minor' : '');
+      b.textContent = (r.exact ? AF.age+': '+r.age+' '+AF.years : '') + (minor ? (r.exact ? ' — ' : '') + AF.minorMsg : '');
+      if(!b.textContent) b.className='age-badge';
+    }
+  }
+}
+
 function buildSummary(){
+  applyMinor();
   const sections = document.querySelectorAll('details.section');
   let html = '<h2>'+document.title+'</h2>';
   const coverBox = document.querySelector('.cover-fields');
@@ -1542,7 +1641,7 @@ function buildSummary(){
         coverItems += `<div class="sum-item"><b>${label}</b>${el.value.replace(/</g,'&lt;')}</div>`;
       }
     });
-    if(coverItems) html += `<div class="sum-sec"><h3>Cover</h3>${coverItems}</div>`;
+    if(coverItems) html += `<div class="sum-sec"><h3>Couverture</h3>${coverItems}</div>`;
   }
   sections.forEach(sec=>{
     const title = sec.querySelector('.sec-title').textContent;
@@ -1553,6 +1652,7 @@ function buildSummary(){
     inputs.forEach(el=>{
       const label = el.getAttribute('data-label');
       if(!label) return;
+      if(el.closest('[data-money]') && afIsMinor()){ items += `<div class="sum-item"><b>${label}</b>${AF.na}</div>`; return; }
       if(el.type==='radio' || el.type==='checkbox'){
         if(el.checked){
           items += `<div class="sum-item"><b>${label}</b>${el.value}</div>`;
@@ -1586,12 +1686,12 @@ async function copySummary(){
   const text = document.getElementById('summaryContent').innerText;
   try{
     await navigator.clipboard.writeText(text);
-    alert('Summary copied — paste it into an email or message to send back.');
+    alert('Résumé copié — collez-le dans un e-mail ou un message pour le renvoyer.');
   }catch(e){
     const ta = document.createElement('textarea');
     ta.value = text; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
-    alert('Summary copied — paste it into an email or message to send back.');
+    alert('Résumé copié — collez-le dans un e-mail ou un message pour le renvoyer.');
   }
 }
 
