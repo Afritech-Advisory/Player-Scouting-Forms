@@ -91,7 +91,7 @@ textarea{resize:vertical;}
       <div class="brandtext">AFRITECH SPORTS TECHNOLOGY<br>AND INNOVATION GROUP LIMITED</div>
     </div>
     <h1>Coach Intelligence &amp; Assessment Form</h1>
-    <p class="sub">Club / Federation / Agency Version — v1.0 (Mobile)</p>
+    <p class="sub">Club / Federation / Agency Version — v5.0 (Mobile)</p>
     <p class="purpose">Evidence-led assessment for coaching recruitment, representation and appointment decisions. Fill on your phone — tap a section to expand it.</p>
     <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
     <p class="progress-label" id="barlabel">0% complete</p>
@@ -936,6 +936,37 @@ textarea{resize:vertical;}
   </div>
 </details>
 <details class="section">
+  <summary><span class="sec-num">11A</span><span class="sec-title">Appointment conditions</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+<div class="field">
+  <label for="coach_ac_buyout">Buy-out ceiling</label>
+  <input type="text" id="coach_ac_buyout" name="coach_ac_buyout" data-label="Buy-out ceiling">
+</div>
+<div class="field">
+  <label for="coach_ac_package">Package ceiling</label>
+  <input type="text" id="coach_ac_package" name="coach_ac_package" data-label="Package ceiling">
+</div>
+<div class="field">
+  <span class="qlabel">Appointment-timing decision</span>
+  
+  <div class="opts">
+    <label class="opt" for="coach_ac_timing_0"><input type="radio" id="coach_ac_timing_0" name="coach_ac_timing" value="Appoint now" data-label="Appointment-timing decision"><span>Appoint now</span></label>
+    <label class="opt" for="coach_ac_timing_1"><input type="radio" id="coach_ac_timing_1" name="coach_ac_timing" value="Hold until the next window" data-label="Appointment-timing decision"><span>Hold until the next window</span></label>
+    <label class="opt" for="coach_ac_timing_2"><input type="radio" id="coach_ac_timing_2" name="coach_ac_timing" value="No appointment required" data-label="Appointment-timing decision"><span>No appointment required</span></label>
+    <label class="opt" for="coach_ac_timing_3"><input type="radio" id="coach_ac_timing_3" name="coach_ac_timing" value="Not yet decided" data-label="Appointment-timing decision"><span>Not yet decided</span></label>
+  </div>
+</div>
+<div class="field">
+  <label for="coach_ac_verify" id="coach_ac_verify_lab">Proceed only if — verification condition(s)</label>
+  <textarea id="coach_ac_verify" name="coach_ac_verify" rows="2" data-label="Proceed only if — verification condition(s)"></textarea>
+</div>
+<div class="field">
+  <label for="coach_ac_walk" id="coach_ac_walk_lab">Walk-away line</label>
+  <textarea id="coach_ac_walk" name="coach_ac_walk" rows="2" data-label="Walk-away line"></textarea>
+</div>
+  </div>
+</details>
+<details class="section">
   <summary><span class="sec-num">12</span><span class="sec-title">Risk &amp; Verification Register</span><span class="chev">▾</span></summary>
   <div class="sec-body">
     
@@ -1081,6 +1112,23 @@ textarea{resize:vertical;}
     <div class="field"><label>Status</label><input type="text" name="coach_action_item_status[]" data-label="Action item — Status"></div>
     </div>
   </template>
+</div>
+  </div>
+</details>
+<details class="section">
+  <summary><span class="sec-num">14A</span><span class="sec-title">Reassessment cue</span><span class="chev">▾</span></summary>
+  <div class="sec-body">
+<div class="field">
+  <label for="coach_ra_verify" id="coach_ra_verify_lab">What to verify next</label>
+  <textarea id="coach_ra_verify" name="coach_ra_verify" rows="2" data-label="What to verify next"></textarea>
+</div>
+<div class="field">
+  <label for="coach_ra_ctx" id="coach_ra_ctx_lab">Match contexts to observe next (opponent level, game state, system)</label>
+  <textarea id="coach_ra_ctx" name="coach_ra_ctx" rows="2" data-label="Match contexts to observe next (opponent level, game state, system)"></textarea>
+</div>
+<div class="field">
+  <label for="coach_ra_date">Target reassessment date</label>
+  <input type="date" id="coach_ra_date" name="coach_ra_date" data-label="Target reassessment date">
 </div>
   </div>
 </details>

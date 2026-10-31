@@ -81,6 +81,12 @@ textarea{resize:vertical;}
   #summaryPane{display:block !important;}
   body{background:#fff;}
 }
+
+.note{font-size:12.5px;color:var(--muted);background:var(--light);border-left:3px solid var(--teal);border-radius:6px;padding:8px 10px;margin:0 0 12px;}
+.minor-hide{display:none !important;}
+.age-badge{display:none;font-size:12.5px;font-weight:700;color:var(--navy);margin:-4px 0 12px;}
+.age-badge.show{display:block;}
+.age-badge.minor{color:#92400E;background:#FEF3C7;border:1px solid var(--gold);border-radius:6px;padding:6px 10px;}
 </style>
 </head>
 <body>
@@ -91,7 +97,7 @@ textarea{resize:vertical;}
       <div class="brandtext">AFRITECH SPORTS TECHNOLOGY<br>AND INNOVATION GROUP LIMITED</div>
     </div>
     <h1>Player Scouting &amp; Career Profile Form</h1>
-    <p class="sub">Player / Parent Version — v4.0 (Mobile)</p>
+    <p class="sub">Player / Parent Version — v5.0 (Mobile)</p>
     <p class="purpose">A structured player information, self-assessment and career-readiness record. Fill on your phone — tap a section to expand it.</p>
     <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
     <p class="progress-label" id="barlabel">0% complete</p>
@@ -164,6 +170,7 @@ textarea{resize:vertical;}
   <label for="plr_date_of_birth">Date of birth</label>
   <input type="date" id="plr_date_of_birth" name="plr_date_of_birth" data-label="Date of birth">
 </div>
+<div class="age-badge" id="ageBadge" aria-live="polite"></div>
 <div class="field">
   <label for="plr_age">Age</label>
   <input type="text" id="plr_age" name="plr_age" data-label="Age">
@@ -681,6 +688,7 @@ textarea{resize:vertical;}
 <details class="section">
   <summary><span class="sec-num">9</span><span class="sec-title">Market Profile &amp; Public Records</span><span class="chev">▾</span></summary>
   <div class="sec-body">
+    <p class="note">Monetary fields are hidden automatically when the date of birth shows the player is under 18.</p>
     
     
 <div class="field">
@@ -695,7 +703,7 @@ textarea{resize:vertical;}
   <label for="plr_transfermarkt_profile_url">Transfermarkt profile URL</label>
   <input type="text" id="plr_transfermarkt_profile_url" name="plr_transfermarkt_profile_url" data-label="Transfermarkt profile URL">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="plr_transfermarkt_market_valuation">Transfermarkt market valuation</label>
   <input type="text" id="plr_transfermarkt_market_valuation" name="plr_transfermarkt_market_valuation" data-label="Transfermarkt market valuation" placeholder="Currency, amount, date shown">
 </div>
@@ -703,15 +711,15 @@ textarea{resize:vertical;}
   <label for="plr_other_verified_valuation_source">Other verified valuation / source</label>
   <input type="text" id="plr_other_verified_valuation_source" name="plr_other_verified_valuation_source" data-label="Other verified valuation / source">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="plr_most_recent_transfer_registration_fee">Most recent transfer / registration fee</label>
   <input type="text" id="plr_most_recent_transfer_registration_fee" name="plr_most_recent_transfer_registration_fee" data-label="Most recent transfer / registration fee">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="plr_current_salary_allowance_optional">Current salary / allowance (optional)</label>
   <input type="text" id="plr_current_salary_allowance_optional" name="plr_current_salary_allowance_optional" data-label="Current salary / allowance (optional)">
 </div>
-<div class="field">
+<div class="field" data-money="1">
   <label for="plr_expected_compensation_salary_range_optional">Expected compensation / salary range (optional)</label>
   <input type="text" id="plr_expected_compensation_salary_range_optional" name="plr_expected_compensation_salary_range_optional" data-label="Expected compensation / salary range (optional)">
 </div>
@@ -1775,7 +1783,8 @@ function addCard(id){
   updateProgress();
 }
 function updateProgress(){
-  const all = document.querySelectorAll('main input, main textarea');
+  applyMinor();
+  const all = Array.from(document.querySelectorAll('main input, main textarea')).filter(el=>!el.closest('.minor-hide'));
   let filled = 0, total = 0;
   const seen = new Set();
   all.forEach(el=>{
@@ -1789,7 +1798,7 @@ function updateProgress(){
   });
   document.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked').forEach(el=>{});
   const radioNames = new Set();
-  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>radioNames.add(el.name));
+  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el=>{ if(!el.closest('.minor-hide')) radioNames.add(el.name); });
   let radioFilled = 0;
   radioNames.forEach(n=>{ if(document.querySelector(`input[name="${n}"]:checked`)) radioFilled++; });
   const pct = total+radioNames.size ? Math.round(100*(filled+radioFilled)/(total+radioNames.size)) : 0;
@@ -1799,7 +1808,48 @@ function updateProgress(){
 document.addEventListener('input', updateProgress);
 document.addEventListener('change', updateProgress);
 
+
+const AF = {"dob": "plr_date_of_birth", "age": "Age", "years": "years", "minorMsg": "Under 18 — safeguarding rules apply", "na": "Not applicable (minor)"};
+function afAge(raw){
+  const s = (raw||'').trim(); if(!s) return null;
+  const now = new Date(), cy = now.getFullYear(), cm = now.getMonth()+1, cd = now.getDate();
+  let m, y, mo, d;
+  if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))){ y=+m[1]; mo=+m[2]; d=+m[3]; }
+  else if((m = s.match(/^(\d{1,2})[\/.\-\s](\d{1,2})[\/.\-\s](\d{4})$/))){ d=+m[1]; mo=+m[2]; y=+m[3]; if(mo>12 && d<=12){ const x=d; d=mo; mo=x; } }
+  if(y){
+    if(mo<1||mo>12||d<1||d>31||y>cy||y<cy-100) return null;
+    let a = cy - y; if(cm < mo || (cm === mo && cd < d)) a--;
+    return (a>=0 && a<80) ? {age:a, exact:true} : null;
+  }
+  if((m = s.match(/^(\d{1,2})\s*(years?|yrs?|ans?|anos?|años?)?$/i))){ const a=+m[1]; return (a>=1 && a<80) ? {age:a, exact:true} : null; }
+  if((m = s.match(/\b((?:19|20)\d{2})\b/))){ const diff = cy - (+m[1]); if(diff>=0 && diff<80) return {age:diff-1, exact:false, maxAge:diff}; }
+  return null;
+}
+function afIsMinor(){
+  const el = document.getElementById(AF.dob); if(!el) return false;
+  const r = afAge(el.value); if(!r) return false;
+  return r.exact ? r.age < 18 : (r.maxAge < 18);
+}
+function applyMinor(){
+  const minor = afIsMinor();
+  document.querySelectorAll('[data-money]').forEach(d=>d.classList.toggle('minor-hide', minor));
+  const t = document.getElementById(AF.secTitleId); if(t) t.textContent = minor ? AF.secTitleMinor : AF.secTitle;
+  const lab = document.getElementById(AF.verifyId+'_lab'); if(lab) lab.textContent = minor ? AF.verifyMinor : AF.verifyNormal;
+  const ta = document.getElementById(AF.verifyId); if(ta) ta.setAttribute('data-label', minor ? AF.verifyMinor : AF.verifyNormal);
+  const b = document.getElementById('ageBadge');
+  if(b){
+    const r = afAge((document.getElementById(AF.dob)||{}).value);
+    if(!r){ b.className='age-badge'; b.textContent=''; }
+    else {
+      b.className = 'age-badge show' + (minor ? ' minor' : '');
+      b.textContent = (r.exact ? AF.age+': '+r.age+' '+AF.years : '') + (minor ? (r.exact ? ' — ' : '') + AF.minorMsg : '');
+      if(!b.textContent) b.className='age-badge';
+    }
+  }
+}
+
 function buildSummary(){
+  applyMinor();
   const sections = document.querySelectorAll('details.section');
   let html = '<h2>'+document.title+'</h2>';
   const coverBox = document.querySelector('.cover-fields');
@@ -1825,6 +1875,7 @@ function buildSummary(){
     inputs.forEach(el=>{
       const label = el.getAttribute('data-label');
       if(!label) return;
+      if(el.closest('[data-money]') && afIsMinor()){ items += `<div class="sum-item"><b>${label}</b>${AF.na}</div>`; return; }
       if(el.type==='radio' || el.type==='checkbox'){
         if(el.checked){
           items += `<div class="sum-item"><b>${label}</b>${el.value}</div>`;
