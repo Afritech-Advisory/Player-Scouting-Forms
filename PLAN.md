@@ -21,7 +21,7 @@ Afritech.
 ## 3. Decisions
 | # | Decision |
 |---|---|
-| D1 | Keep two formats: the fillable PDF and the dashboard. Delete the 16 per-language browser form pages. No redirects are needed, because no links were sent. |
+| D1 | **Reversed 2026-11-03.** Keep the per-language browser form pages. The Player CV Desk (claude.ai artifact) links to `player*.html` and `scout*.html` in all four languages, and Andrew set these forms as the standard. Scouts and coaches share the scout form. |
 | D2 | Build a Coach-hire dashboard so all four forms have one. |
 | D3 | Dashboard email stays a short summary (the 1,700-character limit is unchanged). The person is told, in their language, to attach the saved PDF. **Save as PDF** comes before **Email**. |
 | D4 | No new consent box. Publishing a player's profile is Andrew's decision case by case (as in the cv-desk plan). Consent only concerns the Player form. |
@@ -44,14 +44,14 @@ For each of the four forms: title, one-line description (existing text), "Open d
 Nothing else: no browser form links and no player profile links.
 
 ## 7. Definition of done
-1. The 16 browser form pages are deleted (coach, coach-hire, player and scout × EN, FR, PT-BR, ES-LATAM).
+1. `player` and `scout` (× EN, FR, PT-BR, ES-LATAM) are kept at their current file names, because the CV Desk links to them. Whether the coach and coach-hire browser pages stay is an open flag.
 2. `coach-hire-dashboard.html` exists to the spec in section 4.
 3. All four dashboards have the section 5 button order and email line.
 4. The 16 fillable PDFs are unchanged.
 5. `index.html` matches section 6.
 6. `players/` is deleted.
 7. Every dashboard, tested at 390px wide in all four languages, saves on the phone, reopens with answers kept, saves as PDF, and opens an email to Advisory@afritechsports.com with the attach-PDF line.
-8. Search finds no link to a deleted file anywhere in the repo.
+8. Search finds no link to a deleted file anywhere in the repo, and all 8 CV Desk links open.
 
 ## 8. Not in this round
 - Any service that stores submissions (Formspree, Google Forms or similar).
@@ -62,6 +62,8 @@ Nothing else: no browser form links and no player profile links.
 - Automatic links from the forms to cv-desk or to the scouting skill.
 
 ## 9. Open flags
+0. **Draft saving was lost in v5.0.** The v4.2 Player / Parent form Andrew supplied saved a draft on the phone; the v5.0 browser forms do not. Restore it in all 8 player and scout pages.
+5. **Coach and coach-hire browser pages:** with D1 reversed, decide whether these stay. Scouts and coaches now use the scout form via the CV Desk.
 1. **The cv-desk link already sent is dead.** cv-desk is still private, with no Pages site and no players. Anyone who received it sees a GitHub 404 or sign-in page until the cv-desk plan's first steps are done (make it public, switch on Pages, publish the first player).
 2. **Full answers depend on the respondent.** Under D3, if the person forgets to attach the PDF, Afritech receives only the summary. Andrew has accepted this; revisit if summaries without attachments start arriving.
 3. **Answers stay only on the phone.** If a respondent clears their browser data before sending, the answers are lost.
