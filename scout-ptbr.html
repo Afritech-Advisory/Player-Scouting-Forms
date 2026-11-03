@@ -1697,5 +1697,62 @@ const obs = new MutationObserver(()=>{
 });
 obs.observe(document.getElementById('summaryPane'), {attributes:true});
 </script>
+<script id="af-draft">
+/* Afritech draft saving (restored from v4.2, 3 Nov 2026): keeps answers on this phone until cleared. */
+(function(){
+  var KEY='afritech_draft_'+(location.pathname.split('/').pop()||'form').replace(/\.html$/,'');
+  var lang=(document.documentElement.lang||'en').toLowerCase();
+  var T={en:['Saving…','Saved on this phone','Draft restored','Saving is not available on this browser','Clear saved answers','Clear all answers on this phone and start a new form?'],
+         fr:['Enregistrement…','Enregistré sur ce téléphone','Brouillon restauré',"L'enregistrement n'est pas disponible sur ce navigateur",'Effacer les réponses enregistrées','Effacer toutes les réponses sur ce téléphone et commencer un nouveau formulaire ?'],
+         pt:['Salvando…','Salvo neste celular','Rascunho restaurado','Salvar não está disponível neste navegador','Apagar respostas salvas','Apagar todas as respostas neste celular e começar um novo formulário?'],
+         es:['Guardando…','Guardado en este teléfono','Borrador restaurado','Guardar no está disponible en este navegador','Borrar respuestas guardadas','¿Borrar todas las respuestas en este teléfono y empezar un formulario nuevo?']};
+  var t=T[lang.slice(0,2)]||T.en, timer=null, status=null, cleared=false;
+  function controls(){return Array.prototype.filter.call(document.querySelectorAll('main input, main textarea, main select'),function(el){return !el.closest('template');});}
+  function setStatus(m){if(status)status.firstChild.textContent=m;}
+  function serialize(){
+    var counts={},occ={};
+    Array.prototype.forEach.call(document.querySelectorAll('[id$="_cards"]'),function(c){counts[c.id]=c.children.length;});
+    var vals=controls().map(function(el){var k=el.name||el.id||'';var i=occ[k]||0;occ[k]=i+1;return [k,i,el.value,el.checked];});
+    return {v:1,counts:counts,vals:vals,at:Date.now()};
+  }
+  function save(){if(cleared)return;try{localStorage.setItem(KEY,JSON.stringify(serialize()));setStatus(t[1]);}catch(e){setStatus(t[3]);}}
+  function queue(){setStatus(t[0]);clearTimeout(timer);timer=setTimeout(save,400);}
+  function load(){
+    var raw;try{raw=localStorage.getItem(KEY);}catch(e){setStatus(t[3]);return;}
+    if(!raw)return;
+    try{
+      var st=JSON.parse(raw);
+      Object.keys(st.counts||{}).forEach(function(id){
+        var c=document.getElementById(id),base=id.replace(/_cards$/,'');if(!c)return;
+        while(c.children.length<st.counts[id]&&typeof addCard==='function'){var n=c.children.length;addCard(base);if(c.children.length===n)break;}
+        while(c.children.length>st.counts[id])c.lastElementChild.remove();
+      });
+      var map={};(st.vals||[]).forEach(function(v){map[v[0]+'::'+v[1]]=v;});
+      var occ={};
+      controls().forEach(function(el){var k=el.name||el.id||'';var i=occ[k]||0;occ[k]=i+1;var v=map[k+'::'+i];if(!v)return;
+        if(el.type==='radio'||el.type==='checkbox')el.checked=!!v[3];else el.value=v[2]||'';});
+      if(typeof updateProgress==='function')updateProgress();
+      setStatus(t[2]);
+    }catch(e){}
+  }
+  function init(){
+    var lab=document.getElementById('barlabel');
+    status=document.createElement('p');status.className='progress-label';status.style.cssText='margin-top:2px;font-size:13px;opacity:.85';
+    status.appendChild(document.createTextNode(''));
+    var clr=document.createElement('button');clr.type='button';clr.textContent=t[4];
+    clr.style.cssText='margin-left:10px;background:none;border:0;padding:4px 0;color:inherit;text-decoration:underline;font:inherit;cursor:pointer';
+    clr.addEventListener('click',function(){if(!confirm(t[5]))return;cleared=true;clearTimeout(timer);try{localStorage.removeItem(KEY);}catch(e){}location.reload();});
+    status.appendChild(clr);
+    if(lab&&lab.parentNode)lab.parentNode.insertBefore(status,lab.nextSibling);
+    load();
+    document.addEventListener('input',queue,{passive:true});
+    document.addEventListener('change',queue,{passive:true});
+    document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.rm-btn,.add-btn,[onclick*="addCard"]'))setTimeout(queue,0);});
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')save();});
+    window.addEventListener('pagehide',save);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 </body>
 </html>
