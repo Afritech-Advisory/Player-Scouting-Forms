@@ -49,7 +49,7 @@ Nothing else: no browser form links and no player profile links.
 3. All four dashboards have the section 5 button order and email line.
 4. The 16 fillable PDFs are unchanged.
 5. `index.html` matches section 6.
-6. `players/` is deleted.
+6. `players/` is deleted. **Done 2026-11-05:** the profiles now live in afritech-sports-cv-desk.
 7. Every dashboard, tested at 390px wide in all four languages, saves on the phone, reopens with answers kept, saves as PDF, and opens an email to Advisory@afritechsports.com with the attach-PDF line.
 8. Search finds no link to a deleted file anywhere in the repo, and all 8 CV Desk links open.
 
