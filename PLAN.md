@@ -1,5 +1,7 @@
 # Player-Scouting-Forms: next-round plan
 
+> **Moved 2026-11-15.** Every form now lives in `forms/` in afritech-sports-cv-desk, and that repo is the only one to update. This repo holds redirects only: each old page forwards to the same file name at `https://afritech-advisory.github.io/afritech-sports-cv-desk/forms/`, and `404.html` forwards everything else. Merge the CV Desk branch first, then this one. The plan below is kept as history.
+
 _Written 2026-11-03 from a question-and-answer session with Andrew Rukidi. No code has been written yet._
 
 ## 1. Goal
